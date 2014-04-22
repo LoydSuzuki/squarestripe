@@ -8,9 +8,10 @@
 #define START_PAGE 2
 #define SHOOT_PAGE 3
 #define VIEW_CHECK_PAGE 4
-#define THUMBNAIL_PAGE 5
-#define ONEPIC_PAGE 6
-#define VIEW_PAGE 7
+#define SAVE_PAGE 5
+#define THUMBNAIL_PAGE 6
+#define SELECT_PAGE 7
+#define VIEW_PAGE 8
 
 class testApp : public ofxiOSApp{
 	
@@ -32,6 +33,14 @@ class testApp : public ofxiOSApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
     
+        /*void ofxiOSScreenGrab(id delegate) {
+            CGRect rect = [[UIScreen mainScreen] bounds];
+            int width = rect.size.width*2; //CHA-CHA-CHA-CHANGESSS
+            int height =  rect.size.height*2; //CHA-CHA-CHA-CHANGESSS
+            NSInteger myDataLength = width * height * 4;
+        }*/
+    
+        
     ofVideoGrabber ivGrabber;
     ofImage image_for_save;
     unsigned char *    videoChar;
@@ -47,6 +56,8 @@ class testApp : public ofxiOSApp{
     ofPoint before_pos;
     ofPoint touch_point;
     int photo_margin;
+    int thum_margin;
+    int thum_width;
     
     ofImage stock_image[6];
     ofImage stripe_image;
@@ -56,6 +67,10 @@ class testApp : public ofxiOSApp{
     ofPixels img_px_edit[7];
     ofTexture img_tx;
     ofTexture stripe_image_tx;
+    ofPixels save_image_px[21];
+    ofImage save_image[21];
+    ofImage select_image;
+    int select_number;
     bool stripe_image_flg;
     float slice_height;
     float square_width;
@@ -72,6 +87,7 @@ class testApp : public ofxiOSApp{
     bool filter_flg;
     bool mix_btn_flg;
     bool shoot_btn_flg[5];
+    bool save_flg;
     
 };
 

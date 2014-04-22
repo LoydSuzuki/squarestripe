@@ -56,6 +56,12 @@ int main(){
 	
 	ofAppiOSWindow * iOSWindow = new ofAppiOSWindow();
 	ofSetupOpenGL(iOSWindow, width, height, OF_FULLSCREEN);
+    
+    /*ofxiOSAppDelegate*delegate = ofxiOSGetAppDelegate();
+    ofxiOSScreenGrab(delegate);*/
+    
+    
+
 	iOSWindow->enableRetina();
 	
 	//ofSetupOpenGL(1024, 768, OF_FULLSCREEN);

@@ -13,6 +13,7 @@ void testApp::setup(){
     square_width = 300;
     size_m = 0.8;
     photo_margin = (ofGetHeight()-square_width*2)/2;
+    thum_margin = 20;
     thr = 0;
     
     photo_btn[1].loadImage("shoot01.png");
@@ -29,6 +30,8 @@ void testApp::setup(){
     before_pos.x = photo_margin + square_width;
     after_pos.x = photo_margin - square_width;
     pos.y = after_pos.y = before_pos.y = ofGetWidth()-square_width*2-photo_margin*2;
+    
+    thum_width = ofGetHeight()/2-photo_margin-thum_margin/2;
     
     //ひとつのスライスの大きさ
     slice_height = 1;
@@ -60,7 +63,25 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
     
-    if(page == SHOOT_PAGE){
+    if(page == START_PAGE){
+        if(touchCheck(0,0,ofGetWidth()/2,ofGetHeight()) == TRUE){
+            page = THUMBNAIL_PAGE;
+        }
+        else if(touchCheck(ofGetWidth()/2,0,ofGetWidth()/2,ofGetHeight()) == TRUE){
+            page = SHOOT_PAGE;
+        }
+        
+    }
+    
+    else if(page == SHOOT_PAGE){
+        
+        //もどるボタン
+        if(touchCheck(ofGetWidth()-20-80,20,80,150) == TRUE){
+            for(int i=1; i<5; i++){
+                stock_image[i].clear();
+            }
+            page = START_PAGE;
+        }
     
         ivGrabber.update();
         unsigned char *cdata = ivGrabber.getPixels(),
@@ -126,7 +147,7 @@ void testApp::update(){
         }
     }
     
-    if(page == VIEW_CHECK_PAGE){
+    else if(page == VIEW_CHECK_PAGE){
         
         //MIX加工
         if(stripe_image_flg == true){
@@ -145,8 +166,12 @@ void testApp::update(){
                 }
             }
             stripe_image_tx.loadData(img_px_edit[0]);
-            image_for_save.saveImage(ofxiOSGetDocumentsDirectory()+"MIX.jpg");
+            //image_for_save.saveImage(ofxiOSGetDocumentsDirectory()+"MIX.jpg");
+            //ofxiOSScreenGrab(NULL);
             stripe_image_flg = false;
+            for(int i=1; i<5; i++){
+                stock_image[i].clear();
+            }
         }
         
         //もどるボタン
@@ -162,10 +187,95 @@ void testApp::update(){
             if(filter_flg == TRUE) filter_flg = FALSE;
             else if(filter_flg == FALSE) filter_flg = TRUE;
         }
+        
+        //セーブボタン
+        if(touchCheck(20,ofGetHeight()-20-150,80,150) == TRUE){
+            page = SAVE_PAGE;
+        }
     }
     
-    touch_point.x = 0;
-    touch_point.y = 0;
+    else if(page == SAVE_PAGE){
+        
+        //もどるボタン
+        if(touchCheck(ofGetWidth()-20-80,20,80,150) == TRUE){
+            page = VIEW_CHECK_PAGE;
+            save_flg = FALSE;
+        }
+        
+        //セーブボタン
+        else if(touchCheck(pos.y-120,pos.x,100,square_width*2) == TRUE && save_flg == FALSE){
+            for(int num=1; num<21; num++){
+                if(save_image[num].bAllocated() == FALSE){
+                    save_image[num] = img_px_edit[0];
+                    break;
+                }
+                else if(save_image[20].bAllocated() == TRUE){
+                    /*満杯です*/
+                }
+            }
+            save_flg = TRUE;
+        }
+        
+        //セーブボタン押した後（もどるボタンが現れる）
+        if(save_flg == TRUE){
+            //ファインダーにもどるボタン
+            if(touchCheck(20,20,80,150) == TRUE){
+                page = SHOOT_PAGE;
+                save_flg = FALSE;
+            }
+            //サムネイルにもどるボタン
+            else if(touchCheck(20,ofGetHeight()-20-150,80,150) == TRUE){
+                page = THUMBNAIL_PAGE;
+                save_flg = FALSE;
+            }
+        }
+    }
+    
+    else if(page == THUMBNAIL_PAGE){
+        
+        for(int num=1; num<21; num++){
+            if(save_image[num].bAllocated() == TRUE){
+                if(num%2 == 1){
+                    if(touchCheck(pos.y -(thum_width+thum_margin)*(num/2-1), pos.x, thum_width, thum_width) == TRUE){
+                        select_image = save_image[num];
+                        select_number = num;
+                        page = SELECT_PAGE;
+                    }
+                }
+                else if(num%2 == 0){
+                    if(touchCheck(pos.y -(thum_width+thum_margin)*(num/2-2), pos.x+thum_width+thum_margin, thum_width, thum_width) == TRUE){
+                        select_image = save_image[num];
+                        select_number = num;
+                        page = SELECT_PAGE;
+                    }
+                }
+            }
+        }
+        
+        //もどるボタン
+        if(touchCheck(ofGetWidth()-20-80,20,80,150) == TRUE){
+            page = START_PAGE;
+        }
+    }
+    
+    else if(page == SELECT_PAGE){
+        
+        //もどるボタン
+        if(touchCheck(ofGetWidth()-20-80,20,80,150) == TRUE){
+            page = THUMBNAIL_PAGE;
+            select_image.clear();
+            select_number = 0;
+        }
+        
+        //ストライプON / OFF ボタン
+        if(touchCheck(20,20,80,150) == TRUE){
+            if(filter_flg == TRUE) filter_flg = FALSE;
+            else if(filter_flg == FALSE) filter_flg = TRUE;
+        }
+    }
+    
+    touch_point.x = -100;
+    touch_point.y = -100;
 }
 
 //--------------------------------------------------------------
@@ -175,20 +285,25 @@ void testApp::draw(){
     ofSetColor(255,255,255);
     if(page == SHOOT_PAGE){
         videoTexture.draw(pos.y,pos.x,square_width*2,square_width*2);
-        
+        //撮影ボタン
         photo_btn[1].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*0+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5);
         photo_btn[2].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*1+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5);
         photo_btn[3].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*2+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5);
         photo_btn[4].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*3+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5);
-    
+        
+        //撮影サムネイル
         if(stock_image[1].bAllocated() == TRUE) stock_image[1].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*0,ofGetHeight()/4,ofGetHeight()/4);
         if(stock_image[1].bAllocated() == TRUE) stock_image[2].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*1,ofGetHeight()/4,ofGetHeight()/4);
         if(stock_image[1].bAllocated() == TRUE) stock_image[3].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*2,ofGetHeight()/4,ofGetHeight()/4);
         if(stock_image[1].bAllocated() == TRUE) stock_image[4].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*3,ofGetHeight()/4,ofGetHeight()/4);
         
-        ofLine(250,20,250,700);
-        ofRect(250,20+thr*700/200,10,10);
+        //コントラストバー
+        ofNoFill();
+        ofRect(250,20,30,600);
+        ofFill();
+        ofRect(250,20+thr*600/200,30,10);
         
+        //MIXボタン
         if(stock_image[1].bAllocated() == TRUE && stock_image[2].bAllocated() == TRUE
            && stock_image[3].bAllocated() == TRUE && stock_image[4].bAllocated() == TRUE){
             ofFill();
@@ -208,15 +323,75 @@ void testApp::draw(){
             }
         }
         
-        //ストライプフラグボタン
+        //ストライプON/OFFボタン
+        ofSetColor(100,255,100);
+        ofRect(20,20,80,150);
+        
+        //saveボタン
+        ofSetColor(100,255,100);
+        ofRect(20,ofGetHeight()-20-150,80,150);
+        
+        //save_image[1].draw(0,0,square_width,square_width);
+        //save_image_tx[2].draw(0,square_width,square_width,square_width);
+    }
+    
+    else if(page == SAVE_PAGE){
+        
+        stripe_image_tx.draw(pos.y,pos.x,square_width*2,square_width*2);
+        
+        if(save_flg == FALSE){
+            //saveボタン（大）
+            ofSetColor(255,100,100);
+            ofRect(pos.y-120,pos.x,100,square_width*2);
+        }
+        
+        if(save_flg == TRUE){
+            //撮影にもどるボタン
+            ofSetColor(100,255,100);
+            ofRect(20,20,80,150);
+        
+            //サムネイル行きボタン
+            ofSetColor(100,255,100);
+            ofRect(20,ofGetHeight()-20-150,80,150);
+        }
+    }
+    
+    else if(page == THUMBNAIL_PAGE){
+        for(int num=1; num<21; num++){
+            if(save_image[num].bAllocated() == TRUE){
+                if(num%2 == 1){
+                    save_image[num].draw(pos.y -(thum_width+thum_margin)*(num/2-1), pos.x, thum_width, thum_width);
+                }
+                else if(num%2 == 0){
+                    save_image[num].draw(pos.y -(thum_width+thum_margin)*(num/2-2), pos.x+thum_width+thum_margin, thum_width, thum_width);
+                }
+            }
+        }
+    }
+    
+    else if(page == SELECT_PAGE){
+        select_image.draw(touch_y,pos.x,square_width*2,square_width*2);
+        
+        //フィルター
+        if(filter_flg == TRUE){
+            for(int i=0; i<square_width/slice_height; i+=flames){
+                ofSetColor(0,0,0);
+                //ofRect(touch_y-(i*slice_height),0,slice_height*(flames-1),camHeight);
+                ofRect(ofGetWidth()/2-square_width+(i*slice_height*2),pos.x,slice_height*2*(flames-1),square_width*2);
+            }
+        }
+        
+        //ストライプON/OFFボタン
         ofSetColor(100,255,100);
         ofRect(20,20,80,150);
     }
+
     
-    //もどるボタン
-    ofSetColor(100,100,255);
-    ofRect(ofGetWidth()-20-80,20,80,150);
-    
+    if(page != START_PAGE){
+        //もどるボタン
+        ofSetColor(100,100,255);
+        ofRect(ofGetWidth()-20-80,20,80,150);
+    }
 }
 
 
@@ -244,7 +419,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
     touch_y = touch.x;
-    thr = touch.y*200/700;
+    thr = touch.y*200/600;
 }
 
 //--------------------------------------------------------------
