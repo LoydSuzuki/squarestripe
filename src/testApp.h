@@ -27,6 +27,7 @@ class testApp : public ofxiOSApp{
         void touchDoubleTap(ofTouchEventArgs & touch);
         void touchCancelled(ofTouchEventArgs & touch);
         bool touchCheck(int x,int y,int w,int h);
+        bool  moveCheck(int x,int y,int w,int h);
 
         void lostFocus();
         void gotFocus();
@@ -55,14 +56,37 @@ class testApp : public ofxiOSApp{
     ofPoint after_pos;
     ofPoint before_pos;
     ofPoint touch_point;
+    ofPoint touch_move;
+    
     int photo_margin;
     int thum_margin;
     int thum_width;
+    
+    ofImage camera_button;
+    ofPoint camera_button_p;
+    ofImage camera_bar;
+    ofPoint camera_bar_p;
+    
+    ofImage back_button;
+    ofImage shoot_jump_button;
+    ofImage save_bar;
+    ofImage thumb_jump_button;
+    ofImage mix_bar;
+    ofImage filter_off_button;
+    ofImage filter_on_button;
+    ofImage save_jump_button;
+    
+    ofImage library_bar;
+    ofImage make_bar;
+    ofImage mixcan_logo;
+    
+    int shoot_num;
     
     ofImage stock_image[6];
     ofImage stripe_image;
     ofImage photo_btn[5];
     int thr;
+    int bri;
     ofPixels img_px[7];
     ofPixels img_px_edit[7];
     ofTexture img_tx;
@@ -88,6 +112,15 @@ class testApp : public ofxiOSApp{
     bool mix_btn_flg;
     bool shoot_btn_flg[5];
     bool save_flg;
+    bool camera_button_flg;
+    
+    bool photo_flg[5];
+    bool photo_past_flg[5];
+    
+    int photo_switch_x[5];
+    
+    int el_dx[5];
+    int el_x[5];
     
 };
 
