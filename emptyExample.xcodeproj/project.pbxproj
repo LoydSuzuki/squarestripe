@@ -17,6 +17,7 @@
 		678E130C1795153C005B6D19 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130B1795153C005B6D19 /* Default.png */; };
 		678E130E17951540005B6D19 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130D17951540005B6D19 /* Default@2x.png */; };
 		678E131017951549005B6D19 /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130F17951549005B6D19 /* Default-568h@2x~iphone.png */; };
+		8C561909190FF2810021C9EC /* SaveUIImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C561908190FF2810021C9EC /* SaveUIImage.mm */; };
 		8C57D9C118FD266E0025E3EB /* shoot01.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C57D9BD18FD266E0025E3EB /* shoot01.png */; };
 		8C57D9C218FD266E0025E3EB /* shoot02.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C57D9BE18FD266E0025E3EB /* shoot02.png */; };
 		8C57D9C318FD266E0025E3EB /* shoot03.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C57D9BF18FD266E0025E3EB /* shoot03.png */; };
@@ -102,6 +103,8 @@
 		678E130B1795153C005B6D19 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = bin/data/Default.png; sourceTree = "<group>"; };
 		678E130D17951540005B6D19 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "bin/data/Default@2x.png"; sourceTree = "<group>"; };
 		678E130F17951549005B6D19 /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x~iphone.png"; path = "bin/data/Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
+		8C561907190FF2810021C9EC /* SaveUIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveUIImage.h; sourceTree = "<group>"; };
+		8C561908190FF2810021C9EC /* SaveUIImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SaveUIImage.mm; sourceTree = "<group>"; };
 		8C57D9BD18FD266E0025E3EB /* shoot01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoot01.png; sourceTree = "<group>"; };
 		8C57D9BE18FD266E0025E3EB /* shoot02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoot02.png; sourceTree = "<group>"; };
 		8C57D9BF18FD266E0025E3EB /* shoot03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoot03.png; sourceTree = "<group>"; };
@@ -413,6 +416,8 @@
 				E4D8936C11527B74007E1F53 /* testApp.h */,
 				8CB5B110190A08D600CE3E5D /* PostInstagram.h */,
 				8CB5B111190A08D600CE3E5D /* PostInstagram.mm */,
+				8C561907190FF2810021C9EC /* SaveUIImage.h */,
+				8C561908190FF2810021C9EC /* SaveUIImage.mm */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -555,6 +560,7 @@
 				8CB5B112190A08D600CE3E5D /* PostInstagram.mm in Sources */,
 				E4D8936E11527B74007E1F53 /* main.mm in Sources */,
 				8C68AA1518FD515100C83C56 /* ofxBaseGui.cpp in Sources */,
+				8C561909190FF2810021C9EC /* SaveUIImage.mm in Sources */,
 				E4D8936F11527B74007E1F53 /* testApp.mm in Sources */,
 				8C68AA1918FD515100C83C56 /* ofxPanel.cpp in Sources */,
 				8C68AA1618FD515100C83C56 /* ofxButton.cpp in Sources */,

@@ -1,7 +1,9 @@
 #include "testApp.h"
 #include "PostInstagram.h"
+#include "SaveUIImage.h"
 
 PostInstagram *instagramViewController;
+SaveUIImage *saveUIImage;
 
 //--------------------------------------------------------------
 void testApp::setup(){
@@ -321,22 +323,25 @@ void testApp::update(){
                 if(save_image[num].bAllocated() == FALSE){
                     save_image[num] = img_px_edit[0];
                     //INSTAGRAM に投稿部分 START
-                    if ([PostInstagram canInstagramOpen]) {
+                    //if ([PostInstagram canInstagramOpen]) {
                         
                         save_image[num].rotate90(-1);
                         
                         image = UIImageFromOFImage(save_image[num]);
                         
-                        instagramViewController = [[PostInstagram alloc] init];
+                        /* instagramViewController = [[PostInstagram alloc] init];
                         [instagramViewController setImage:image];
                         [ofxiOSGetUIWindow() addSubview:instagramViewController.view];
-                        [ofxiOSGetViewController() addChildViewController:instagramViewController];
-                        
-                    }
+                        [ofxiOSGetViewController() addChildViewController:instagramViewController];*/
                     
-                    else{
+                        saveUIImage = [[SaveUIImage alloc] init];
+                        [saveUIImage saveImage:image];
+                        
+                   // }
+                    
+                  //  else{
                         // Instagramがインストールされていない
-                    }
+                  //  }
                     //INSTAGRAM に投稿部分 END
 
                     break;
@@ -649,8 +654,6 @@ bool testApp::moveCheck(int x,int y,int w,int h){
     return uimg;
     
 }
-
-
 
 //--------------------------------------------------------------
 void testApp::exit(){

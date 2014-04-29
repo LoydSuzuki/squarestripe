@@ -32,7 +32,8 @@ class testApp : public ofxiOSApp{
         bool touchCheck(int x,int y,int w,int h);
         bool  moveCheck(int x,int y,int w,int h);
         UIImage * UIImageFromOFImage(ofImage & img);
-
+        void saveUIImageToRoll(UIImage & img);
+    
         void lostFocus();
         void gotFocus();
         void gotMemoryWarning();
