@@ -1,4 +1,7 @@
 #include "testApp.h"
+#include "PostInstagram.h"
+
+PostInstagram *instagramViewController;
 
 //--------------------------------------------------------------
 void testApp::setup(){
@@ -43,6 +46,8 @@ void testApp::setup(){
     library_bar.loadImage("img/LOGO_PAGE/library_bar.png");
     make_bar.loadImage("img/LOGO_PAGE/make_bar.png");
     mixcan_logo.loadImage("img/LOGO_PAGE/mixcan_logo.png");
+    
+    instagram_test.loadImage("img/2014-04-13 17.31.24.jpg");
     
     back_button.rotate90(1);
     shoot_jump_button.rotate90(1);
@@ -315,12 +320,32 @@ void testApp::update(){
             for(int num=1; num<21; num++){
                 if(save_image[num].bAllocated() == FALSE){
                     save_image[num] = img_px_edit[0];
+                    //INSTAGRAM に投稿部分 START
+                    if ([PostInstagram canInstagramOpen]) {
+                        
+                        save_image[num].rotate90(-1);
+                        
+                        image = UIImageFromOFImage(save_image[num]);
+                        
+                        instagramViewController = [[PostInstagram alloc] init];
+                        [instagramViewController setImage:image];
+                        [ofxiOSGetUIWindow() addSubview:instagramViewController.view];
+                        [ofxiOSGetViewController() addChildViewController:instagramViewController];
+                        
+                    }
+                    
+                    else{
+                        // Instagramがインストールされていない
+                    }
+                    //INSTAGRAM に投稿部分 END
+
                     break;
                 }
                 else if(save_image[20].bAllocated() == TRUE){
                     /*満杯です*/
                 }
             }
+            
             save_flg = TRUE;
         }
         
@@ -595,6 +620,36 @@ bool testApp::moveCheck(int x,int y,int w,int h){
     }
     else return FALSE;
 }
+
+//-------------//UIImageFromOFImage//------------------------------------------
+
+ UIImage * testApp::UIImageFromOFImage(ofImage & img){
+    int width = img.width;
+    int height =img.height;
+    
+    int nrOfColorComponents = 1;
+    
+    if (img.type == OF_IMAGE_GRAYSCALE) nrOfColorComponents = 1;
+    else if (img.type == OF_IMAGE_COLOR) nrOfColorComponents = 3;
+    else if (img.type == OF_IMAGE_COLOR_ALPHA) nrOfColorComponents = 4;
+    
+    int bitsPerColorComponent = 8;
+    int rawImageDataLength = width * height * nrOfColorComponents;
+    BOOL interpolateAndSmoothPixels = NO;
+    CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
+    CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+    CGDataProviderRef dataProviderRef;
+    CGColorSpaceRef colorSpaceRef;
+    CGImageRef imageRef;
+    GLubyte *rawImageDataBuffer = img.getPixels();
+    dataProviderRef = CGDataProviderCreateWithData(NULL, rawImageDataBuffer, rawImageDataLength, nil);
+    colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    imageRef = CGImageCreate(width, height, bitsPerColorComponent, bitsPerColorComponent * nrOfColorComponents, width * nrOfColorComponents, colorSpaceRef, bitmapInfo, dataProviderRef, NULL, interpolateAndSmoothPixels, renderingIntent);
+    UIImage * uimg = [UIImage imageWithCGImage:imageRef];
+    return uimg;
+    
+}
+
 
 
 //--------------------------------------------------------------

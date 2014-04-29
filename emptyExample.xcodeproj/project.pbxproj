@@ -43,6 +43,8 @@
 		8CB5B1081907952700CE3E5D /* make_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CB5B1051907952700CE3E5D /* make_bar.png */; };
 		8CB5B1091907952700CE3E5D /* mixcan_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CB5B1061907952700CE3E5D /* mixcan_logo.png */; };
 		8CB5B10B1907E68000CE3E5D /* camera_button_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CB5B10A1907E68000CE3E5D /* camera_button_2.png */; };
+		8CB5B112190A08D600CE3E5D /* PostInstagram.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8CB5B111190A08D600CE3E5D /* PostInstagram.mm */; };
+		8CB5B114190A35D100CE3E5D /* 2014-04-13 17.31.24.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8CB5B113190A35D100CE3E5D /* 2014-04-13 17.31.24.jpg */; };
 		8CBBC75B18E966C8002438CF /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 8CBBC74B18E966C8002438CF /* .gitkeep */; };
 		8CBBC75C18E966C8002438CF /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CBBC74C18E966C8002438CF /* Default-568h@2x~iphone.png */; };
 		8CBBC75D18E966C8002438CF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CBBC74D18E966C8002438CF /* Default.png */; };
@@ -136,6 +138,9 @@
 		8CB5B1051907952700CE3E5D /* make_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = make_bar.png; sourceTree = "<group>"; };
 		8CB5B1061907952700CE3E5D /* mixcan_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mixcan_logo.png; sourceTree = "<group>"; };
 		8CB5B10A1907E68000CE3E5D /* camera_button_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_button_2.png; sourceTree = "<group>"; };
+		8CB5B110190A08D600CE3E5D /* PostInstagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostInstagram.h; sourceTree = "<group>"; };
+		8CB5B111190A08D600CE3E5D /* PostInstagram.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PostInstagram.mm; sourceTree = "<group>"; };
+		8CB5B113190A35D100CE3E5D /* 2014-04-13 17.31.24.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "2014-04-13 17.31.24.jpg"; sourceTree = "<group>"; };
 		8CBBC74B18E966C8002438CF /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8CBBC74C18E966C8002438CF /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		8CBBC74D18E966C8002438CF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -317,13 +322,6 @@
 			path = LOGO_PAGE;
 			sourceTree = "<group>";
 		};
-		8CB5B10D1909281A00CE3E5D /* UIDIC */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = UIDIC;
-			sourceTree = "<group>";
-		};
 		8CBBC74A18E966C8002438CF /* data */ = {
 			isa = PBXGroup;
 			children = (
@@ -348,6 +346,7 @@
 		8CBBC75718E966C8002438CF /* img */ = {
 			isa = PBXGroup;
 			children = (
+				8CB5B113190A35D100CE3E5D /* 2014-04-13 17.31.24.jpg */,
 				8CB5B1031907952700CE3E5D /* LOGO_PAGE */,
 				8CB5B0EB1907768800CE3E5D /* GLOBAL */,
 				8CB5B0ED1907768800CE3E5D /* SAVE_PAGE */,
@@ -408,11 +407,12 @@
 		E4D8936A11527B74007E1F53 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				8CB5B10D1909281A00CE3E5D /* UIDIC */,
 				8CB5B0E01900E98100CE3E5D /* Globals.h */,
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
+				8CB5B110190A08D600CE3E5D /* PostInstagram.h */,
+				8CB5B111190A08D600CE3E5D /* PostInstagram.mm */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -498,6 +498,7 @@
 				8CB5B1081907952700CE3E5D /* make_bar.png in Resources */,
 				8CB5B0FA1907768800CE3E5D /* camera_button.png in Resources */,
 				678E130C1795153C005B6D19 /* Default.png in Resources */,
+				8CB5B114190A35D100CE3E5D /* 2014-04-13 17.31.24.jpg in Resources */,
 				8CB5B1071907952700CE3E5D /* library_bar.png in Resources */,
 				8CB5B0FD1907768800CE3E5D /* camera_bar.png in Resources */,
 				8CB5B0FB1907768800CE3E5D /* save_button.png in Resources */,
@@ -551,6 +552,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C68AA1818FD515100C83C56 /* ofxLabel.cpp in Sources */,
+				8CB5B112190A08D600CE3E5D /* PostInstagram.mm in Sources */,
 				E4D8936E11527B74007E1F53 /* main.mm in Sources */,
 				8C68AA1518FD515100C83C56 /* ofxBaseGui.cpp in Sources */,
 				E4D8936F11527B74007E1F53 /* testApp.mm in Sources */,

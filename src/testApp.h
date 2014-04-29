@@ -1,5 +1,8 @@
 #pragma once
 
+#import <Foundation/Foundation.h>
+#import <Social/Social.h>
+
 #include "ofMain.h"
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
@@ -28,6 +31,7 @@ class testApp : public ofxiOSApp{
         void touchCancelled(ofTouchEventArgs & touch);
         bool touchCheck(int x,int y,int w,int h);
         bool  moveCheck(int x,int y,int w,int h);
+        UIImage * UIImageFromOFImage(ofImage & img);
 
         void lostFocus();
         void gotFocus();
@@ -76,6 +80,8 @@ class testApp : public ofxiOSApp{
     ofImage filter_on_button;
     ofImage save_jump_button;
     
+    ofImage instagram_test;
+    
     ofImage library_bar;
     ofImage make_bar;
     ofImage mixcan_logo;
@@ -85,6 +91,9 @@ class testApp : public ofxiOSApp{
     ofImage stock_image[6];
     ofImage stripe_image;
     ofImage photo_btn[5];
+    
+    UIImage *image;
+    
     int thr;
     int bri;
     ofPixels img_px[7];
