@@ -48,10 +48,12 @@ class testApp : public ofxiOSApp{
     
         
     ofVideoGrabber ivGrabber;
+    ofxiOSImagePicker camera;
     ofImage image_for_save;
     unsigned char *    videoChar;
     ofPixels           videoPixels;
     ofImage            videoImage;
+    ofImage            videoImagePre;
     ofTexture          videoTexture;
     float              camWidth;
     float              camHeight;
@@ -75,11 +77,18 @@ class testApp : public ofxiOSApp{
     ofImage back_button;
     ofImage shoot_jump_button;
     ofImage save_bar;
+    ofImage instagram_bar;
     ofImage thumb_jump_button;
     ofImage mix_bar;
     ofImage filter_off_button;
     ofImage filter_on_button;
     ofImage save_jump_button;
+    ofImage edit_button;
+    ofImage edit_button_black;
+    ofImage done_saving;
+    
+    ofImage contrast;
+    ofImage brightness;
     
     ofImage instagram_test;
     
@@ -106,6 +115,7 @@ class testApp : public ofxiOSApp{
     ofImage select_image;
     int select_number;
     bool stripe_image_flg;
+    bool library_btn_touch;
     float slice_height;
     float square_width;
     int flames;
@@ -122,7 +132,10 @@ class testApp : public ofxiOSApp{
     bool mix_btn_flg;
     bool shoot_btn_flg[5];
     bool save_flg;
+    bool instagram_flg;
     bool camera_button_flg;
+    
+    bool conbri_flg;
     
     bool photo_flg[5];
     bool photo_past_flg[5];

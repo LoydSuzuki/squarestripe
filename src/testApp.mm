@@ -38,12 +38,19 @@ void testApp::setup(){
     
     back_button.loadImage("img/GLOBAL/back_button.png");
     shoot_jump_button.loadImage("img/SAVE_PAGE/camera_button.png");
-    save_bar.loadImage("img/SAVE_PAGE/save_button.png");
+    save_bar.loadImage("img/SAVE_PAGE/save_button_2.png");
+    instagram_bar.loadImage("img/SAVE_PAGE/upload_instagram_button.png");
     thumb_jump_button.loadImage("img/SAVE_PAGE/thumb_button.png");
     mix_bar.loadImage("img/SHOOT_PAGE/mix_button.png");
     filter_off_button.loadImage("img/VIEW_CHECK_PAGE/filter_off_button.png");
     filter_on_button.loadImage("img/VIEW_CHECK_PAGE/filter_on_button.png");
     save_jump_button.loadImage("img/VIEW_CHECK_PAGE/save_button.png");
+    edit_button.loadImage("img/SHOOT_PAGE/edit_button.png");
+    edit_button_black.loadImage("img/SHOOT_PAGE/edit_button_black.png");
+    done_saving.loadImage("img/SAVE_PAGE/done_saving.png");
+    
+    contrast.loadImage("img/SHOOT_PAGE/con.png");
+    brightness.loadImage("img/SHOOT_PAGE/bri.png");
     
     library_bar.loadImage("img/LOGO_PAGE/library_bar.png");
     make_bar.loadImage("img/LOGO_PAGE/make_bar.png");
@@ -54,11 +61,17 @@ void testApp::setup(){
     back_button.rotate90(1);
     shoot_jump_button.rotate90(1);
     save_bar.rotate90(1);
+    instagram_bar.rotate90(1);
     thumb_jump_button.rotate90(1);
     mix_bar.rotate90(1);
     filter_off_button.rotate90(1);
     filter_on_button.rotate90(1);
     save_jump_button.rotate90(1);
+    edit_button.rotate90(1);
+    edit_button_black.rotate90(1);
+    done_saving.rotate90(1);
+    contrast.rotate90(1);
+    brightness.rotate90(1);
     
     library_bar.rotate90(1);
     make_bar.rotate90(1);
@@ -80,6 +93,7 @@ void testApp::setup(){
     flames = 4;
     ivGrabber.initGrabber(camWidth,camHeight,OF_PIXELS_BGRA);
     videoImage.allocate(camWidth,camHeight,OF_IMAGE_COLOR);
+    videoImagePre.allocate(camWidth,camHeight,OF_IMAGE_COLOR);
     videoPixels.allocate(camWidth,camHeight,OF_IMAGE_COLOR);
     videoTexture.allocate(square_width,square_width,GL_RGB);
     
@@ -102,6 +116,7 @@ void testApp::setup(){
     camera_bar_p.x = photo_margin;
     camera_bar_p.y = 100;
     camera_button_flg = FALSE;
+    conbri_flg = FALSE;
     
     camera_button_p.y = 70;
     
@@ -109,6 +124,8 @@ void testApp::setup(){
     photo_switch_x[2] = ofGetHeight()/2;
     photo_switch_x[3] = ofGetHeight()/2 + (ofGetHeight()-photo_margin-40 - ofGetHeight()/2)/2;
     photo_switch_x[4] = ofGetHeight()-photo_margin-40;
+    
+    library_btn_touch = FALSE;
 }
 
 //--------------------------------------------------------------
@@ -116,10 +133,18 @@ void testApp::update(){
     
     if(page == START_PAGE){
         if(touchCheck(camera_bar_p.y,camera_bar_p.x,81,600) == TRUE){
-            page = THUMBNAIL_PAGE;
+            camera.openSavedPhotos();
         }
         else if(touchCheck(camera_bar_p.y+150,camera_bar_p.x,81,600) == TRUE){
             page = SHOOT_PAGE;
+        }
+        
+        if(camera.imageUpdated){
+            select_image.setFromPixels(camera.pixels, camera.width, camera.height, OF_IMAGE_COLOR_ALPHA);
+            camera.imageUpdated = false;
+            select_image.rotate90(1);
+            camera.close();
+            page = SELECT_PAGE;
         }
     }
     
@@ -131,10 +156,13 @@ void testApp::update(){
                 stock_image[i].clear();
             }
             page = START_PAGE;
+            mix_btn_flg = FALSE;
+            conbri_flg = FALSE;
         }
         
         //撮影ボタン
-        if(touchCheck(camera_button_p.y-camera_button.width/2,ofGetHeight()/2-camera_button.width/2,100,100) == TRUE){
+        if(touchCheck(camera_button_p.y-camera_button.width/2,ofGetHeight()/2-camera_button.width/2,100,100) == TRUE &&
+            mix_btn_flg == FALSE){
             if(stock_image[1].bAllocated() == FALSE)  stock_image[1] = videoPixels;
             else if(stock_image[2].bAllocated() == FALSE)  stock_image[2] = videoPixels;
             else if(stock_image[3].bAllocated() == FALSE)  stock_image[3] = videoPixels;
@@ -185,25 +213,40 @@ void testApp::update(){
         }
         */
         
-        
-        //コントラスト調節 画面上のみ反応
-        if(moveCheck(pos.y,pos.x,square_width,square_width) == TRUE){
-            thr = touch_move.x*255/600;
-            bri = (touch_move.y-pos.y)*255/600;
+        //コントラスト、明るさ調整モード
+        if(touchCheck(20,20,80,150) == TRUE && mix_btn_flg == FALSE){
+            if(conbri_flg == TRUE) conbri_flg = FALSE;
+            else if(conbri_flg == FALSE) conbri_flg = TRUE;
         }
+        
+        if(conbri_flg == TRUE){
+            //コントラスト調節
+            if(moveCheck(120+115,100,115,500) == TRUE){
+                thr = (touch_move.x-100)*255/500;
+            }
+            else if(moveCheck(120,100,115,500) == TRUE){
+                bri = (touch_move.x-100)*255/500;
+            }
+            
+        }
+        
         
         ivGrabber.update();
         unsigned char *cdata = ivGrabber.getPixels(),
+        *idata_p = videoImagePre.getPixels(),
         *idata = videoImage.getPixels();
         
-        //コントラスト
         for(int k=0; k<camWidth*camHeight*3; k++){
-            if(cdata[k]+bri > 255) cdata[k] = 255;
-            else if(cdata[k] + bri < 0) cdata[k] = 0;
-            else cdata[k] = cdata[k]+bri;
-            if(cdata[k] < thr) idata[k] = 0;
-            else if(cdata[k] > (255-thr)) idata[k] = 255;
-            else idata[k] = (cdata[k]-thr)*(256.0/(256.0-thr*2));
+            
+            //明るさ
+            if(cdata[k]+bri > 255) idata_p[k] = 255;
+            else if(cdata[k] + bri < 0) idata_p[k] = 0;
+            else idata_p[k] = cdata[k]+bri;
+
+            //コントラスト
+            if(idata_p[k] < thr) idata[k] = 0;
+            else if(idata_p[k] > (255-thr)) idata[k] = 255;
+            else idata[k] = (idata_p[k]-thr)*(256.0/(256.0-thr*2));
         }
         
         videoImage.setImageType(OF_IMAGE_GRAYSCALE);
@@ -213,51 +256,23 @@ void testApp::update(){
     
         videoTexture.loadData(videoPixels);
         
-        /*
-        if(touchCheck((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*0+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5) == TRUE){
-            shoot_btn_flg[1] = TRUE;
+        //MIXボタン押す
+        if(mix_btn_flg == TRUE){
+            if(touchCheck(camera_bar_p.y,pos.x,100,square_width*2) == TRUE){
+                
+                stripe_image_flg = TRUE;
+                page = VIEW_CHECK_PAGE;
+                mix_btn_flg = FALSE;
+                conbri_flg = FALSE;
+            }
         }
-        else if(touchCheck((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*1+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5) == TRUE){
-            shoot_btn_flg[2] = TRUE;
-        }
-        else if(touchCheck((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*2+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5) == TRUE){
-            shoot_btn_flg[3] = TRUE;
-        }
-        else if(touchCheck((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*3+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5) == TRUE){
-            shoot_btn_flg[4] = TRUE;
-        }
-        
-        if(shoot_btn_flg[1] == TRUE){
-            stock_image[1] = videoPixels;
-            shoot_btn_flg[1] = FALSE;
-        }
-        if(shoot_btn_flg[2] == TRUE){
-            stock_image[2] = videoPixels;
-            shoot_btn_flg[2] = FALSE;
-        }
-
-        if(shoot_btn_flg[3] == TRUE){
-            stock_image[3] = videoPixels;
-            shoot_btn_flg[3] = FALSE;
-        }
-
-        if(shoot_btn_flg[4] == TRUE){
-            stock_image[4] = videoPixels;
-            shoot_btn_flg[4] = FALSE;
-        }
-         */
         
         //MIXボタン出現
         if(stock_image[1].bAllocated() == TRUE && stock_image[2].bAllocated() == TRUE
-           && stock_image[3].bAllocated() == TRUE && stock_image[4].bAllocated() == TRUE){
+           && stock_image[3].bAllocated() == TRUE && stock_image[4].bAllocated() == TRUE && stripe_image_flg == FALSE){
+            
             mix_btn_flg = TRUE;
             
-            //MIXボタンにタッチ
-            if(touchCheck(camera_bar_p.y,pos.x,100,square_width*2) == TRUE){
-                stripe_image_flg = TRUE;
-                page = VIEW_CHECK_PAGE;
-                
-            }
         }
     }
     
@@ -293,6 +308,7 @@ void testApp::update(){
             for(int i=1; i<5; i++){
                 stock_image[i].clear();
             }
+            mix_btn_flg = FALSE;
             page = SHOOT_PAGE;
         }
         
@@ -314,63 +330,68 @@ void testApp::update(){
         if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
             page = VIEW_CHECK_PAGE;
             save_flg = FALSE;
+            instagram_flg = FALSE;
+        }
+        
+        //instagram_button
+        else if(touchCheck(camera_bar_p.y + 120,camera_bar_p.x,81,600) && instagram_flg == FALSE){
+            if ([PostInstagram canInstagramOpen]){
+                save_image[1] = img_px_edit[0];
+                //INSTAGRAM に投稿部分 START
+                        
+                save_image[1].rotate90(-1);
+                        
+                image = UIImageFromOFImage(save_image[1]);
+                        
+                instagramViewController = [[PostInstagram alloc] init];
+                [instagramViewController setImage:image];
+                [ofxiOSGetUIWindow() addSubview:instagramViewController.view];
+                [ofxiOSGetViewController() addChildViewController:instagramViewController];
+                
+                instagram_flg = TRUE;
+                }
+                else{
+                    // Instagramがインストールされていない
+                }
+                //INSTAGRAM に投稿部分 END
         }
         
         //セーブボタン
         else if(touchCheck(camera_bar_p.y,pos.x,100,square_width*2) == TRUE
                 && save_flg == FALSE){
-            for(int num=1; num<21; num++){
-                if(save_image[num].bAllocated() == FALSE){
-                    save_image[num] = img_px_edit[0];
-                    //INSTAGRAM に投稿部分 START
-                    //if ([PostInstagram canInstagramOpen]) {
-                        
-                        save_image[num].rotate90(-1);
-                        
-                        image = UIImageFromOFImage(save_image[num]);
-                        
-                        /* instagramViewController = [[PostInstagram alloc] init];
-                        [instagramViewController setImage:image];
-                        [ofxiOSGetUIWindow() addSubview:instagramViewController.view];
-                        [ofxiOSGetViewController() addChildViewController:instagramViewController];*/
+            
+            save_image[1] = img_px_edit[0];
+            save_image[1].rotate90(-1);
+            image = UIImageFromOFImage(save_image[1]);
                     
-                        saveUIImage = [[SaveUIImage alloc] init];
-                        [saveUIImage saveImage:image];
-                        
-                   // }
-                    
-                  //  else{
-                        // Instagramがインストールされていない
-                  //  }
-                    //INSTAGRAM に投稿部分 END
-
-                    break;
-                }
-                else if(save_image[20].bAllocated() == TRUE){
-                    /*満杯です*/
-                }
-            }
+            saveUIImage = [[SaveUIImage alloc] init];
+            [saveUIImage saveImage:image];
             
             save_flg = TRUE;
+
+            }
         }
         
         //セーブボタン押した後（もどるボタンが現れる）
-        if(save_flg == TRUE){
+        if(save_flg == TRUE || instagram_flg == TRUE){
             //ファインダーにもどるボタン
             if(touchCheck(20,20,80,150) == TRUE){
                 page = SHOOT_PAGE;
                 save_flg = FALSE;
+                instagram_flg = FALSE;
             }
-            //サムネイルにもどるボタン
+            //スタートにもどるボタン
             else if(touchCheck(20,ofGetHeight()-20-150,80,150) == TRUE){
-                page = THUMBNAIL_PAGE;
+                page = START_PAGE;
                 save_flg = FALSE;
+                instagram_flg = FALSE;
             }
         }
-    }
+
     
-    else if(page == THUMBNAIL_PAGE){
+    /*else if(page == THUMBNAIL_PAGE){
         
+     
         for(int num=1; num<21; num++){
             if(save_image[num].bAllocated() == TRUE){
                 if(num%2 == 1){
@@ -394,13 +415,13 @@ void testApp::update(){
         if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
             page = START_PAGE;
         }
-    }
-    
-    else if(page == SELECT_PAGE){
-        
-        //もどるボタン
-        if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
-            page = THUMBNAIL_PAGE;
+     
+    }*/
+
+    //もどるボタン
+        else if(page == SELECT_PAGE){
+            if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
+            page = START_PAGE;
             select_image.clear();
             select_number = 0;
         }
@@ -428,7 +449,6 @@ void testApp::draw(){
     if(page == START_PAGE){
         
         mixcan_logo.draw(camera_bar_p.y+600,camera_bar_p.x,81,600);
-
         make_bar.draw(camera_bar_p.y+150,camera_bar_p.x,81,600);
         library_bar.draw(camera_bar_p.y,camera_bar_p.x,81,600);
     }
@@ -473,16 +493,20 @@ void testApp::draw(){
             el_x[i] = el_x[i] - (el_x[i]-el_dx[i])/2;
         }
         
-        ofSetColor(100,100,100);
-        ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[1]-10,20,20);
-        ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[2]-10,20,20);
-        ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[3]-10,20,20);
-        ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[4]-10,20,20);
-        ofSetColor(255,255,255);
+        if(conbri_flg == FALSE && mix_btn_flg == FALSE){
+            
+            ofSetColor(100,100,100);
+            ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[1]-10,20,20);
+            ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[2]-10,20,20);
+            ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[3]-10,20,20);
+            ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[4]-10,20,20);
+            ofSetColor(255,255,255);
         
-        
-        camera_button.setAnchorPoint(camera_button.width/2,camera_button.width/2);
-        camera_button.draw(camera_button_p.y+10,ofGetHeight()/2,100,100);
+            camera_button.setAnchorPoint(camera_button.width/2,camera_button.width/2);
+            camera_button.draw(camera_button_p.y+10,ofGetHeight()/2,100,100);
+            
+            edit_button.draw(20,20,80,150);
+        }
         
         /*
         //カメラバー
@@ -510,12 +534,23 @@ void testApp::draw(){
         if(stock_image[1].bAllocated() == TRUE) stock_image[3].draw(pos.y-10-ofGetHeight()/4,ofGetHeight()/4*2,ofGetHeight()/4,ofGetHeight()/4);
         if(stock_image[1].bAllocated() == TRUE) stock_image[4].draw(pos.y-10-ofGetHeight()/4,ofGetHeight()/4*3,ofGetHeight()/4,ofGetHeight()/4);
         
+        if(conbri_flg == TRUE){
+            edit_button_black.draw(20,20,80,150);
+            ofSetColor(116,116,116);
+            ofRect(120,20,230,600);
+            ofSetColor(255,255,255);
+            ofSetLineWidth(5);
+            
+            ofLine(120+115+58,100,120+115+58,600);
+            ofLine(120+58,100,120+58,600);
+            
+            ofEllipse(120+115+58,100+thr*500/255,20,20);
+            ofEllipse(120+58,100+bri*500/255,20,20);
+            
+            contrast.draw(120+115+58-20,40,40,40);
+            brightness.draw(120+58-20,40,40,40);
+        }
         
-        //コントラストバー
-        ofNoFill();
-        ofRect(pos.y,20,30,600);
-        ofFill();
-        ofRect(pos.y,20+thr*600/200,30,10);
         
         //MIXボタン
         if(stock_image[1].bAllocated() == TRUE && stock_image[2].bAllocated() == TRUE
@@ -555,12 +590,16 @@ void testApp::draw(){
         
         stripe_image_tx.draw(pos.y,pos.x,square_width*2,square_width*2);
         
-        if(save_flg == FALSE){
+        if(save_flg == FALSE && instagram_flg == FALSE){
             //saveボタン（大）
             save_bar.draw(camera_bar_p.y,camera_bar_p.x,81,600);
+            
+            //instagramボタン
+            instagram_bar.draw(camera_bar_p.y + 120,camera_bar_p.x,81,600);
+            
         }
         
-        if(save_flg == TRUE){
+        if(save_flg == TRUE || instagram_flg == TRUE){
             //撮影にもどるボタン
             //ofSetColor(100,255,100);
             shoot_jump_button.draw(20,20,80,150);
@@ -568,6 +607,9 @@ void testApp::draw(){
             //サムネイル行きボタン
             //ofSetColor(100,255,100);
             thumb_jump_button.draw(20,ofGetHeight()-20-150,80,150);
+        }
+        if(save_flg == TRUE){
+            done_saving.draw(200,(640-245)/2,50,245);
         }
     }
     
