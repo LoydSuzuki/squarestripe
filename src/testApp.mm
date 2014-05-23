@@ -1,9 +1,11 @@
 #include "testApp.h"
 #include "PostInstagram.h"
 #include "SaveUIImage.h"
+#include "webViewController.h"
 
 PostInstagram *instagramViewController;
 SaveUIImage *saveUIImage;
+webViewController *webView;
 
 //--------------------------------------------------------------
 void testApp::setup(){
@@ -23,7 +25,7 @@ void testApp::setup(){
     
     camera_bar.loadImage("img/SHOOT_PAGE/camera_bar.png");
     camera_bar.rotate90(1);
-    camera_button.loadImage("img/SHOOT_PAGE/camera_button_2.png");
+    camera_button.loadImage("img/SHOOT_PAGE/camera_btn_bar.png");
     camera_button.rotate90(1);
     
     photo_btn[1].loadImage("shoot01.png");
@@ -38,25 +40,31 @@ void testApp::setup(){
     
     back_button.loadImage("img/GLOBAL/back_button.png");
     shoot_jump_button.loadImage("img/SAVE_PAGE/camera_button.png");
-    save_bar.loadImage("img/SAVE_PAGE/save_button_2.png");
-    instagram_bar.loadImage("img/SAVE_PAGE/upload_instagram_button.png");
+    save_bar.loadImage("img/SAVE_PAGE/save_btn.png");
+    instagram_bar.loadImage("img/SAVE_PAGE/instagram_btn.png");
     thumb_jump_button.loadImage("img/SAVE_PAGE/thumb_button.png");
-    mix_bar.loadImage("img/SHOOT_PAGE/mix_button.png");
+    mix_bar.loadImage("img/SHOOT_PAGE/mix_btn.png");
     filter_off_button.loadImage("img/VIEW_CHECK_PAGE/filter_off_button.png");
     filter_on_button.loadImage("img/VIEW_CHECK_PAGE/filter_on_button.png");
-    save_jump_button.loadImage("img/VIEW_CHECK_PAGE/save_button.png");
+    save_jump_button.loadImage("img/VIEW_CHECK_PAGE/mix_btn_orange.png");
     edit_button.loadImage("img/SHOOT_PAGE/edit_button.png");
-    edit_button_black.loadImage("img/SHOOT_PAGE/edit_button_black.png");
+    edit_button_black.loadImage("img/SHOOT_PAGE/effect_x_btn.png");
     done_saving.loadImage("img/SAVE_PAGE/done_saving.png");
     
     contrast.loadImage("img/SHOOT_PAGE/con.png");
     brightness.loadImage("img/SHOOT_PAGE/bri.png");
+    blank_photos.loadImage("img/SHOOT_PAGE/blank_photo_white.png");
     
-    library_bar.loadImage("img/LOGO_PAGE/library_bar.png");
-    make_bar.loadImage("img/LOGO_PAGE/make_bar.png");
+    //library_bar.loadImage("img/LOGO_PAGE/library_bar.png");
+    //make_bar.loadImage("img/LOGO_PAGE/make_bar.png");
     mixcan_logo.loadImage("img/LOGO_PAGE/mixcan_logo.png");
     
-    instagram_test.loadImage("img/2014-04-13 17.31.24.jpg");
+    make_btn.loadImage("img/LOGO_PAGE/make_btn.png");
+    library_btn.loadImage("img/LOGO_PAGE/library_btn.png");
+    timeline_btn.loadImage("img/LOGO_PAGE/timeline_btn.png");
+    home_btn.loadImage("img/WEB_PAGE/home_btn.png");
+    x_btn.loadImage("img/GLOBAL/x.png");
+    photolib_btn.loadImage("img/VIEW_CHECK_PAGE/photo_btn.png");
     
     back_button.rotate90(1);
     shoot_jump_button.rotate90(1);
@@ -73,9 +81,19 @@ void testApp::setup(){
     contrast.rotate90(1);
     brightness.rotate90(1);
     
-    library_bar.rotate90(1);
-    make_bar.rotate90(1);
+    make_btn.rotate90(1);
+    library_btn.rotate90(1);
+    timeline_btn.rotate90(1);
+    home_btn.rotate90(1);
+    
+    blank_photos.rotate90(1);
+    
+    //library_bar.rotate90(1);
+    //make_bar.rotate90(1);
     mixcan_logo.rotate90(1);
+    
+    x_btn.rotate90(1);
+    photolib_btn.rotate90(1);
     
     pos.x = 0+photo_margin;
     before_pos.x = photo_margin + square_width;
@@ -126,17 +144,27 @@ void testApp::setup(){
     photo_switch_x[4] = ofGetHeight()-photo_margin-40;
     
     library_btn_touch = FALSE;
+    home_flg = FALSE;
+    
+    shoot_flg = FALSE;
+    
+    //Add webview setup
+    webView = [[webViewController alloc] initWithNibName:@"webViewController" bundle:nil];
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
     
     if(page == START_PAGE){
-        if(touchCheck(camera_bar_p.y,camera_bar_p.x,81,600) == TRUE){
+        if(touchCheck(300,0,150,640) == TRUE){
+            page = SHOOT_PAGE;
+            
+        }
+        else if(touchCheck(150,0,150,640) == TRUE){
             camera.openSavedPhotos();
         }
-        else if(touchCheck(camera_bar_p.y+150,camera_bar_p.x,81,600) == TRUE){
-            page = SHOOT_PAGE;
+        else if(touchCheck(0,0,150,640) == TRUE){
+            page = WEB_PAGE;
         }
         
         if(camera.imageUpdated){
@@ -161,12 +189,15 @@ void testApp::update(){
         }
         
         //撮影ボタン
-        if(touchCheck(camera_button_p.y-camera_button.width/2,ofGetHeight()/2-camera_button.width/2,100,100) == TRUE &&
+        if(touchCheck(150/2-130/2,640/2-130/2,130,130) == TRUE &&
             mix_btn_flg == FALSE){
             if(stock_image[1].bAllocated() == FALSE)  stock_image[1] = videoPixels;
             else if(stock_image[2].bAllocated() == FALSE)  stock_image[2] = videoPixels;
             else if(stock_image[3].bAllocated() == FALSE)  stock_image[3] = videoPixels;
             else if(stock_image[4].bAllocated() == FALSE)  stock_image[4] = videoPixels;
+            
+            shoot_flg = TRUE;
+
         }
         
         /*
@@ -214,7 +245,7 @@ void testApp::update(){
         */
         
         //コントラスト、明るさ調整モード
-        if(touchCheck(20,20,80,150) == TRUE && mix_btn_flg == FALSE){
+        if(touchCheck(20,470,80,150) == TRUE && mix_btn_flg == FALSE){
             if(conbri_flg == TRUE) conbri_flg = FALSE;
             else if(conbri_flg == FALSE) conbri_flg = TRUE;
         }
@@ -258,7 +289,7 @@ void testApp::update(){
         
         //MIXボタン押す
         if(mix_btn_flg == TRUE){
-            if(touchCheck(camera_bar_p.y,pos.x,100,square_width*2) == TRUE){
+            if(touchCheck(0,0,150,640) == TRUE){
                 
                 stripe_image_flg = TRUE;
                 page = VIEW_CHECK_PAGE;
@@ -303,6 +334,16 @@ void testApp::update(){
             }
         }
         
+        //スライド操作
+        if(slide_flg == FALSE && touchCheck(slide_y,pos.x,600,600) == TRUE){
+            slide_span_y = touch_point.x-slide_y;
+            slide_flg = TRUE;
+        }
+        
+        if(slide_flg == TRUE && moveCheck(slide_y,pos.x,600,600) == TRUE){
+            slide_y = touch_move.y - slide_span_y;
+        }
+        
         //もどるボタン
         if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
             for(int i=1; i<5; i++){
@@ -313,18 +354,25 @@ void testApp::update(){
         }
         
         //ストライプON / OFF ボタン
-        if(touchCheck(20,20,80,150) == TRUE){
+        if(touchCheck(ofGetWidth()/2+square_width-80,20,80,80) == TRUE){
             if(filter_flg == TRUE) filter_flg = FALSE;
-            else if(filter_flg == FALSE) filter_flg = TRUE;
+        }
+        //フィルター動かすと出現
+        if(filter_flg == FALSE && move_flg == TRUE){
+            filter_flg = TRUE;
         }
         
         //セーブボタン
-        if(touchCheck(20,ofGetHeight()-20-150,80,150) == TRUE){
+        if(touchCheck(0,0,80,640) == TRUE){
             page = SAVE_PAGE;
+            d_stripe_img_pos.y = pos.y;
+            stripe_img_pos.y = slide_y;
         }
     }
     
     else if(page == SAVE_PAGE){
+        
+        stripe_img_pos.y = stripe_img_pos.y - (stripe_img_pos.y - d_stripe_img_pos.y)/4;
         
         //もどるボタン
         if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
@@ -333,9 +381,22 @@ void testApp::update(){
             instagram_flg = FALSE;
         }
         
+        //セーブボタン押した後（もどるボタンが現れる）
+        if(save_flg == TRUE || instagram_flg == TRUE){
+            //ファインダーにもどるボタン
+            if(touchCheck(0,0,80,640) == TRUE){
+                page = START_PAGE;
+                save_flg = FALSE;
+                instagram_flg = FALSE;
+            }
+        }
+
+        
         //instagram_button
-        else if(touchCheck(camera_bar_p.y + 120,camera_bar_p.x,81,600) && instagram_flg == FALSE){
-            if ([PostInstagram canInstagramOpen]){
+        if(touchCheck(150,0,150,640) && instagram_flg == FALSE){
+            
+            
+        if ([PostInstagram canInstagramOpen]){
                 save_image[1] = img_px_edit[0];
                 //INSTAGRAM に投稿部分 START
                         
@@ -357,8 +418,8 @@ void testApp::update(){
         }
         
         //セーブボタン
-        else if(touchCheck(camera_bar_p.y,pos.x,100,square_width*2) == TRUE
-                && save_flg == FALSE){
+        else if(touchCheck(0,0,150,640) == TRUE
+                && save_flg == FALSE && save_page_flg == FALSE){
             
             save_image[1] = img_px_edit[0];
             save_image[1].rotate90(-1);
@@ -371,23 +432,6 @@ void testApp::update(){
 
             }
         }
-        
-        //セーブボタン押した後（もどるボタンが現れる）
-        if(save_flg == TRUE || instagram_flg == TRUE){
-            //ファインダーにもどるボタン
-            if(touchCheck(20,20,80,150) == TRUE){
-                page = SHOOT_PAGE;
-                save_flg = FALSE;
-                instagram_flg = FALSE;
-            }
-            //スタートにもどるボタン
-            else if(touchCheck(20,ofGetHeight()-20-150,80,150) == TRUE){
-                page = START_PAGE;
-                save_flg = FALSE;
-                instagram_flg = FALSE;
-            }
-        }
-
     
     /*else if(page == THUMBNAIL_PAGE){
         
@@ -424,14 +468,59 @@ void testApp::update(){
             page = START_PAGE;
             select_image.clear();
             select_number = 0;
-        }
+            }
+            
+            //スライド操作
+            if(slide_flg == FALSE && touchCheck(slide_y,pos.x,600,600) == TRUE){
+                slide_span_y = touch_point.x-slide_y;
+                slide_flg = TRUE;
+            }
+            
+            if(slide_flg == TRUE && moveCheck(slide_y,pos.x,600,600) == TRUE){
+                slide_y = touch_move.y - slide_span_y;
+            }
+
         
-        //ストライプON / OFF ボタン
-        if(touchCheck(20,20,80,150) == TRUE){
-            if(filter_flg == TRUE) filter_flg = FALSE;
-            else if(filter_flg == FALSE) filter_flg = TRUE;
+            //ストライプ OFF ボタン
+            if(touchCheck(ofGetWidth()/2+square_width-80,20,80,80) == TRUE){
+                if(filter_flg == TRUE) filter_flg = FALSE;
+            }
+            //フィルター動かすと出現
+            if(filter_flg == FALSE && move_flg == TRUE){
+                filter_flg = TRUE;
+            }
+            
+            //フォトライブラリボタン
+            if(touchCheck(0,0,80,640) == TRUE){
+                camera.openSavedPhotos();
+            }
+            
+            if(camera.imageUpdated){
+                select_image.setFromPixels(camera.pixels, camera.width, camera.height, OF_IMAGE_COLOR_ALPHA);
+                camera.imageUpdated = false;
+                select_image.rotate90(1);
+                camera.close();
+            }
+
         }
-    }
+    
+        else if(page == WEB_PAGE){
+            //Add webView Setup
+            
+            [ofxiOSGetUIWindow() addSubview:webView.view];
+
+            
+            //もどるボタン
+            if(touchCheck(0,0,80,640) == TRUE && home_flg == TRUE){
+                [webView test];
+                page = START_PAGE;
+                home_flg = FALSE;
+            }
+            else if(touchCheck(0,0,150,640) == TRUE){
+                home_flg = TRUE;
+            }
+
+        }
     
     //タッチ関数をリセットする
     touch_point.x = -100;
@@ -449,12 +538,23 @@ void testApp::draw(){
     if(page == START_PAGE){
         
         mixcan_logo.draw(camera_bar_p.y+600,camera_bar_p.x,81,600);
-        make_bar.draw(camera_bar_p.y+150,camera_bar_p.x,81,600);
-        library_bar.draw(camera_bar_p.y,camera_bar_p.x,81,600);
+        //make_bar.draw(camera_bar_p.y+150,camera_bar_p.x,81,600);
+        //library_bar.draw(camera_bar_p.y,camera_bar_p.x,81,600);
+        
+        make_btn.draw(300,0,150,640);
+        library_btn.draw(150,0,150,640);
+        timeline_btn.draw(0,0,150,640);
     }
     
     if(page == SHOOT_PAGE){
-        videoTexture.draw(pos.y,pos.x,square_width*2,square_width*2);
+        
+        if(shoot_flg == TRUE){
+            ofColor(0,0,0);
+            ofRect(pos.y,pos.x,square_width*2,square_width*2);
+            ofColor(255,255,255);
+            shoot_flg = FALSE;
+        }
+        
         
         if(stock_image[1].bAllocated() == FALSE){
             el_dx[1] = 100;
@@ -495,49 +595,38 @@ void testApp::draw(){
         
         if(conbri_flg == FALSE && mix_btn_flg == FALSE){
             
+            /*
             ofSetColor(100,100,100);
-            ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[1]-10,20,20);
-            ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[2]-10,20,20);
-            ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[3]-10,20,20);
-            ofEllipse(camera_button_p.y+10,ofGetHeight()/2+el_x[4]-10,20,20);
+            ofEllipse(camera_button_p.y+10,ofGetHeight()/2-el_x[1]-10,20,20);
+            ofEllipse(camera_button_p.y+10,ofGetHeight()/2-el_x[2]-10,20,20);
+            ofEllipse(camera_button_p.y+10,ofGetHeight()/2-el_x[3]-10,20,20);
+            ofEllipse(camera_button_p.y+10,ofGetHeight()/2-el_x[4]-10,20,20);
             ofSetColor(255,255,255);
+            */
         
-            camera_button.setAnchorPoint(camera_button.width/2,camera_button.width/2);
-            camera_button.draw(camera_button_p.y+10,ofGetHeight()/2,100,100);
+            //camera_button.setAnchorPoint(camera_button.width/2,camera_button.width/2);
+            camera_button.draw(-1,0,150,640);
             
-            edit_button.draw(20,20,80,150);
+            edit_button.draw(20,470,80,150);
         }
         
-        /*
-        //カメラバー
-        camera_bar.draw(camera_bar_p.y,camera_bar_p.x,81,600);
-        
-        ofSetColor(100,100,100);
-        ofEllipse(camera_bar_p.y+40,photo_switch_x[1]-5,10,10);
-        ofEllipse(camera_bar_p.y+40,photo_switch_x[2]-5,10,10);
-        ofEllipse(camera_bar_p.y+40,photo_switch_x[3]-5,10,10);
-        ofEllipse(camera_bar_p.y+40,photo_switch_x[4]-5,10,10);
-        
-        ofSetColor(255,255,255);
-        camera_button.draw(camera_button_p.y,camera_button_p.x,70,70);
-        */
-        
-        //撮影ボタン
-        /*photo_btn[1].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*0+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5);
-        photo_btn[2].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*1+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5);
-        photo_btn[3].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*2+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5);
-        photo_btn[4].draw((ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/4*3+(ofGetHeight()/4-ofGetHeight()/5)/2,ofGetHeight()/5,ofGetHeight()/5);*/
-        
         //撮影サムネイル
-        if(stock_image[1].bAllocated() == TRUE) stock_image[1].draw(pos.y-10-ofGetHeight()/4,ofGetHeight()/4*0,ofGetHeight()/4,ofGetHeight()/4);
-        if(stock_image[1].bAllocated() == TRUE) stock_image[2].draw(pos.y-10-ofGetHeight()/4,ofGetHeight()/4*1,ofGetHeight()/4,ofGetHeight()/4);
-        if(stock_image[1].bAllocated() == TRUE) stock_image[3].draw(pos.y-10-ofGetHeight()/4,ofGetHeight()/4*2,ofGetHeight()/4,ofGetHeight()/4);
-        if(stock_image[1].bAllocated() == TRUE) stock_image[4].draw(pos.y-10-ofGetHeight()/4,ofGetHeight()/4*3,ofGetHeight()/4,ofGetHeight()/4);
+        blank_photos.draw(pos.y+600-ofGetHeight()/4,0,ofGetHeight()/4,ofGetHeight());
+                          
+        if(stock_image[1].bAllocated() == TRUE) stock_image[1].draw(pos.y+600-ofGetHeight()/4,ofGetHeight()/4*0,ofGetHeight()/4,ofGetHeight()/4);
+        if(stock_image[1].bAllocated() == TRUE) stock_image[2].draw(pos.y+600-ofGetHeight()/4,ofGetHeight()/4*1,ofGetHeight()/4,ofGetHeight()/4);
+        if(stock_image[1].bAllocated() == TRUE) stock_image[3].draw(pos.y+600-ofGetHeight()/4,ofGetHeight()/4*2,ofGetHeight()/4,ofGetHeight()/4);
+        if(stock_image[1].bAllocated() == TRUE) stock_image[4].draw(pos.y+600-ofGetHeight()/4,ofGetHeight()/4*3,ofGetHeight()/4,ofGetHeight()/4);
         
         if(conbri_flg == TRUE){
-            edit_button_black.draw(20,20,80,150);
+            
+            ofSetColor(255,255,255,50);
+            camera_button.draw(-1,0,150,640);
+            
+            ofSetColor(255,255,255,255);
+            edit_button_black.draw(20,470,80,150);
             ofSetColor(116,116,116);
-            ofRect(120,20,230,600);
+            ofRect(110,0,250,640);
             ofSetColor(255,255,255);
             ofSetLineWidth(5);
             
@@ -549,7 +638,15 @@ void testApp::draw(){
             
             contrast.draw(120+115+58-20,40,40,40);
             brightness.draw(120+58-20,40,40,40);
+            
+            
         }
+        
+        videoTexture.draw(cam_pos.y,pos.x,square_width*2,square_width*2);
+        
+        if(conbri_flg == FALSE) cam_pos.y = cam_pos.y - (cam_pos.y - (pos.y-ofGetHeight()/4-20))/1.6;
+        else if(conbri_flg == TRUE) cam_pos.y = cam_pos.y - (cam_pos.y - 380)/1.6;
+        
         
         
         //MIXボタン
@@ -557,12 +654,12 @@ void testApp::draw(){
            && stock_image[3].bAllocated() == TRUE && stock_image[4].bAllocated() == TRUE){
             //ofFill();
             //ofSetColor(255,100,100);
-            mix_bar.draw(camera_bar_p.y,camera_bar_p.x,81,600);
+            mix_bar.draw(0,0,150,640);
         }
         
     }
     else if(page == VIEW_CHECK_PAGE){
-        stripe_image_tx.draw(touch_y,pos.x,square_width*2,square_width*2);
+        stripe_image_tx.draw(slide_y,pos.x,square_width*2,square_width*2);
         
         //フィルター
         if(filter_flg == TRUE){
@@ -573,14 +670,17 @@ void testApp::draw(){
             }
         }
         
+        
         //ストライプON/OFFボタン
-        ofSetColor(255,255,255);
-        if(filter_flg == TRUE) filter_on_button.draw(20,20,80,150);
-        else if(filter_flg == FALSE) filter_off_button.draw(20,20,80,150);
+        if(move_flg == FALSE){
+            ofSetColor(255,255,255,100);
+            if(filter_flg == TRUE) x_btn.draw(ofGetWidth()/2+square_width-80,20,80,80);
+            ofSetColor(255,255,255,255);
+        }
         
         //saveボタン
         ofSetColor(255,255,255);
-        save_jump_button.draw(20,ofGetHeight()-20-150,80,150);
+        save_jump_button.draw(0,0,80,640);
         
         //save_image[1].draw(0,0,square_width,square_width);
         //save_image_tx[2].draw(0,square_width,square_width,square_width);
@@ -588,29 +688,25 @@ void testApp::draw(){
     
     else if(page == SAVE_PAGE){
         
-        stripe_image_tx.draw(pos.y,pos.x,square_width*2,square_width*2);
+        stripe_image_tx.draw(stripe_img_pos.y,pos.x,square_width*2,square_width*2);
         
         if(save_flg == FALSE && instagram_flg == FALSE){
             //saveボタン（大）
-            save_bar.draw(camera_bar_p.y,camera_bar_p.x,81,600);
+            save_bar.draw(0,0,150,640);
             
             //instagramボタン
-            instagram_bar.draw(camera_bar_p.y + 120,camera_bar_p.x,81,600);
-            
+            instagram_bar.draw(150,0,150,640);
         }
         
         if(save_flg == TRUE || instagram_flg == TRUE){
-            //撮影にもどるボタン
-            //ofSetColor(100,255,100);
-            shoot_jump_button.draw(20,20,80,150);
-        
-            //サムネイル行きボタン
-            //ofSetColor(100,255,100);
-            thumb_jump_button.draw(20,ofGetHeight()-20-150,80,150);
+            
+            home_btn.draw(0,0,80,640);
         }
+        
         if(save_flg == TRUE){
             done_saving.draw(200,(640-245)/2,50,245);
         }
+        
     }
     
     else if(page == THUMBNAIL_PAGE){
@@ -627,7 +723,7 @@ void testApp::draw(){
     }
     
     else if(page == SELECT_PAGE){
-        select_image.draw(touch_y,pos.x,square_width*2,square_width*2);
+        select_image.draw(slide_y,pos.x,square_width*2,square_width*2);
         
         //フィルター
         if(filter_flg == TRUE){
@@ -638,18 +734,28 @@ void testApp::draw(){
             }
         }
         
-        //ストライプON/OFFボタン
-        ofSetColor(255,255,255);
-        if(filter_flg == TRUE) filter_on_button.draw(20,20,80,150);
-        else if(filter_flg == FALSE) filter_off_button.draw(20,20,80,150);
+        //ストライプOFFボタン
+        if(move_flg == FALSE){
+            ofSetColor(255,255,255,100);
+            if(filter_flg == TRUE) x_btn.draw(ofGetWidth()/2+square_width-80,20,80,80);
+        }
+        
+        ofSetColor(255,255,255,255);
+        photolib_btn.draw(-1,0,80,640);
+
+    }
+    
+    if(page == WEB_PAGE){
+       home_btn.draw(0,0,80,640);
     }
 
     
-    if(page != START_PAGE){
+    if(page != START_PAGE && page != WEB_PAGE){
         //もどるボタン
         ofSetColor(255,255,255);
         back_button.draw(ofGetWidth()-140,20,80,150);
     }
+
 }
 
 
@@ -716,6 +822,8 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     
     touch_move.x = touch.y;
     touch_move.y = touch.x;
+    
+    move_flg = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -724,6 +832,9 @@ void testApp::touchUp(ofTouchEventArgs & touch){
     if(page == SHOOT_PAGE && stock_image[4].bAllocated() == FALSE){
         camera_button_flg = FALSE;
     }
+    slide_flg = FALSE;
+    
+    move_flg = FALSE;
 }
 
 //--------------------------------------------------------------

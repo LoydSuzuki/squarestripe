@@ -15,6 +15,7 @@
 #define THUMBNAIL_PAGE 6
 #define SELECT_PAGE 7
 #define VIEW_PAGE 8
+#define WEB_PAGE 9
 
 class testApp : public ofxiOSApp{
 	
@@ -64,6 +65,10 @@ class testApp : public ofxiOSApp{
     ofPoint before_pos;
     ofPoint touch_point;
     ofPoint touch_move;
+    ofPoint stripe_img_pos;
+    ofPoint d_stripe_img_pos;
+    
+    ofPoint cam_pos;
     
     int photo_margin;
     int thum_margin;
@@ -86,15 +91,22 @@ class testApp : public ofxiOSApp{
     ofImage edit_button;
     ofImage edit_button_black;
     ofImage done_saving;
+    ofImage x_btn;
+    ofImage photolib_btn;
     
     ofImage contrast;
     ofImage brightness;
     
     ofImage instagram_test;
     
-    ofImage library_bar;
-    ofImage make_bar;
+    //ofImage library_bar;
+    //ofImage make_bar;
+    ofImage make_btn;
+    ofImage library_btn;
+    ofImage timeline_btn;
+    ofImage home_btn;
     ofImage mixcan_logo;
+    ofImage blank_photos;
     
     int shoot_num;
     
@@ -103,6 +115,7 @@ class testApp : public ofxiOSApp{
     ofImage photo_btn[5];
     
     UIImage *image;
+    UIWebView * myWebView;
     
     int thr;
     int bri;
@@ -126,6 +139,9 @@ class testApp : public ofxiOSApp{
     int touch_num;
     int touch_y;
     
+    int slide_y;
+    int slide_span_y;
+    
     int page;//ページの種類を指定
     bool back_flg;//「もどる」ボタンが押されたときのフラグ
     bool filter_flg;
@@ -134,8 +150,15 @@ class testApp : public ofxiOSApp{
     bool save_flg;
     bool instagram_flg;
     bool camera_button_flg;
+    bool slide_flg;
+    
+    bool save_page_flg;
     
     bool conbri_flg;
+    bool home_flg;
+    
+    bool shoot_flg;
+    bool move_flg;
     
     bool photo_flg[5];
     bool photo_past_flg[5];
