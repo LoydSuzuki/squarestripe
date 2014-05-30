@@ -32,17 +32,12 @@
     NSURLRequest* myRequest = [NSURLRequest requestWithURL: googleURL];
     // これを、myFirstWebViewのloadRequestメソッドに渡します
     [self->myWebView loadRequest:myRequest];
+    //キャッシュ消去
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+
 }
 
-// ページ読込開始時にインジケータをくるくるさせる
--(void)webViewDidStartLoad:(UIWebView*)webView{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-}
 
-// ページ読込完了時にインジケータを非表示にする
--(void)webViewDidFinishLoad:(UIWebView*)webView{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -55,14 +50,15 @@
 }
 
 -(void)test{
+    
+    //リロード
     [myWebView reload];
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
      self->myWebView.delegate = nil;
 }
 
-- (void)dealloc {
+- (void)dealloc{
     
     [myWebView release];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
@@ -70,7 +66,7 @@
 }
 
 - (void)viewDidUnload {
-    [self setMyWebView:nil];
+//    [self setMyWebView:nil];
     [myWebView release];
     myWebView = nil;
     [super viewDidUnload];

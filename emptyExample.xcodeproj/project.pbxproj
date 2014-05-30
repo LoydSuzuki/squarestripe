@@ -22,6 +22,14 @@
 		8C07A5F7192C707B00A209AC /* library_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C07A5F4192C707B00A209AC /* library_btn.png */; };
 		8C07A5F8192C707B00A209AC /* make_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C07A5F5192C707B00A209AC /* make_btn.png */; };
 		8C07A5F9192C707B00A209AC /* timeline_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C07A5F6192C707B00A209AC /* timeline_btn.png */; };
+		8C0E95811936031A00335BD7 /* back_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C0E95801936031A00335BD7 /* back_btn.png */; };
+		8C0E95831936069F00335BD7 /* mixcan_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C0E95821936069F00335BD7 /* mixcan_header.png */; };
+		8C0E958519360A0200335BD7 /* conbra_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C0E958419360A0200335BD7 /* conbra_btn.png */; };
+		8C0E958919360D4900335BD7 /* conbri_x_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C0E958819360D4900335BD7 /* conbri_x_btn.png */; };
+		8C1754101937160100DBFA7B /* scrollViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C17540E1937160100DBFA7B /* scrollViewController.mm */; };
+		8C1754111937160100DBFA7B /* scrollViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C17540F1937160100DBFA7B /* scrollViewController.xib */; };
+		8C1754151937489E00DBFA7B /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C1754141937489E00DBFA7B /* info.png */; };
+		8C175419193829AD00DBFA7B /* page3_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C175418193829AD00DBFA7B /* page3_1.png */; };
 		8C561909190FF2810021C9EC /* SaveUIImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C561908190FF2810021C9EC /* SaveUIImage.mm */; };
 		8C57D9C118FD266E0025E3EB /* shoot01.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C57D9BD18FD266E0025E3EB /* shoot01.png */; };
 		8C57D9C218FD266E0025E3EB /* shoot02.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C57D9BE18FD266E0025E3EB /* shoot02.png */; };
@@ -132,6 +140,15 @@
 		8C07A5F4192C707B00A209AC /* library_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = library_btn.png; sourceTree = "<group>"; };
 		8C07A5F5192C707B00A209AC /* make_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = make_btn.png; sourceTree = "<group>"; };
 		8C07A5F6192C707B00A209AC /* timeline_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeline_btn.png; sourceTree = "<group>"; };
+		8C0E95801936031A00335BD7 /* back_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_btn.png; sourceTree = "<group>"; };
+		8C0E95821936069F00335BD7 /* mixcan_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mixcan_header.png; sourceTree = "<group>"; };
+		8C0E958419360A0200335BD7 /* conbra_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = conbra_btn.png; sourceTree = "<group>"; };
+		8C0E958819360D4900335BD7 /* conbri_x_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = conbri_x_btn.png; sourceTree = "<group>"; };
+		8C17540D1937160100DBFA7B /* scrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollViewController.h; sourceTree = "<group>"; };
+		8C17540E1937160100DBFA7B /* scrollViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = scrollViewController.mm; sourceTree = "<group>"; };
+		8C17540F1937160100DBFA7B /* scrollViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = scrollViewController.xib; sourceTree = "<group>"; };
+		8C1754141937489E00DBFA7B /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		8C175418193829AD00DBFA7B /* page3_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page3_1.png; sourceTree = "<group>"; };
 		8C561907190FF2810021C9EC /* SaveUIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveUIImage.h; sourceTree = "<group>"; };
 		8C561908190FF2810021C9EC /* SaveUIImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SaveUIImage.mm; sourceTree = "<group>"; };
 		8C57D9BD18FD266E0025E3EB /* shoot01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoot01.png; sourceTree = "<group>"; };
@@ -298,6 +315,9 @@
 				8C07A5E91929AF2100A209AC /* webViewController.h */,
 				8C07A5EA1929AF2100A209AC /* webViewController.mm */,
 				8C07A5EB1929AF2100A209AC /* webViewController.xib */,
+				8C17540D1937160100DBFA7B /* scrollViewController.h */,
+				8C17540E1937160100DBFA7B /* scrollViewController.mm */,
+				8C17540F1937160100DBFA7B /* scrollViewController.xib */,
 			);
 			name = gui;
 			sourceTree = "<group>";
@@ -345,11 +365,13 @@
 		8CB5B0EB1907768800CE3E5D /* GLOBAL */ = {
 			isa = PBXGroup;
 			children = (
+				8C0E95821936069F00335BD7 /* mixcan_header.png */,
 				8CE3C2B4192DF5C70037067C /* x.png */,
 				8CBA67D2191B34BD0073412E /* mixcan_top_640_1136.png */,
 				8CBA67D0191B33FF0073412E /* mixcan_icon_120_120.png */,
 				8CBA67C8191B2CB70073412E /* mixcan_icon.png */,
 				8CBA67C6191B293A0073412E /* Default.png */,
+				8C0E95801936031A00335BD7 /* back_btn.png */,
 				8CB5B0EC1907768800CE3E5D /* back_button.png */,
 			);
 			path = GLOBAL;
@@ -373,6 +395,8 @@
 		8CB5B0F11907768800CE3E5D /* SHOOT_PAGE */ = {
 			isa = PBXGroup;
 			children = (
+				8C0E958819360D4900335BD7 /* conbri_x_btn.png */,
+				8C0E958419360A0200335BD7 /* conbra_btn.png */,
 				8CE3C2B6192E0B240037067C /* effect_x_btn.png */,
 				8CE3C2AE192DE4000037067C /* camera_btn_bar.png */,
 				8CE3C2AA192DDE670037067C /* camera_btn_orange.png */,
@@ -408,6 +432,7 @@
 		8CB5B1031907952700CE3E5D /* LOGO_PAGE */ = {
 			isa = PBXGroup;
 			children = (
+				8C1754141937489E00DBFA7B /* info.png */,
 				8C07A5F4192C707B00A209AC /* library_btn.png */,
 				8C07A5F5192C707B00A209AC /* make_btn.png */,
 				8C07A5F6192C707B00A209AC /* timeline_btn.png */,
@@ -435,6 +460,7 @@
 		8CBBC75718E966C8002438CF /* img */ = {
 			isa = PBXGroup;
 			children = (
+				8C175418193829AD00DBFA7B /* page3_1.png */,
 				8C07A5FA192C825800A209AC /* WEB_PAGE */,
 				8CB5B1031907952700CE3E5D /* LOGO_PAGE */,
 				8CB5B0EB1907768800CE3E5D /* GLOBAL */,
@@ -584,9 +610,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C175419193829AD00DBFA7B /* page3_1.png in Resources */,
 				8CBA67C4191B1F480073412E /* bri.png in Resources */,
 				8CBA67CB191B2D8A0073412E /* Images.xcassets in Resources */,
 				8C07A5F8192C707B00A209AC /* make_btn.png in Resources */,
+				8C0E95811936031A00335BD7 /* back_btn.png in Resources */,
 				8CE3C29F192D94DF0037067C /* blank_photo.png in Resources */,
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
 				8CBA67C5191B1F480073412E /* con.png in Resources */,
@@ -595,6 +623,7 @@
 				678E130A17951536005B6D19 /* Icon.png in Resources */,
 				8CE3C2A7192DCD150037067C /* mix_btn_orange.png in Resources */,
 				8CE3C2B3192DEC8C0037067C /* save_btn.png in Resources */,
+				8C1754111937160100DBFA7B /* scrollViewController.xib in Resources */,
 				8CB5B1011907768800CE3E5D /* filter_on_button.png in Resources */,
 				8CE3C2B7192E0B240037067C /* effect_x_btn.png in Resources */,
 				8CBA67C9191B2CB70073412E /* mixcan_icon.png in Resources */,
@@ -604,6 +633,7 @@
 				8CBA67BF191A20E70073412E /* edit_button_black.png in Resources */,
 				8CB5B1001907768800CE3E5D /* filter_off_button.png in Resources */,
 				8CB5B0FA1907768800CE3E5D /* camera_button.png in Resources */,
+				8C1754151937489E00DBFA7B /* info.png in Resources */,
 				8CE3C2A9192DDCF00037067C /* blank_photo_white.png in Resources */,
 				678E130C1795153C005B6D19 /* Default.png in Resources */,
 				8CB5B0FD1907768800CE3E5D /* camera_bar.png in Resources */,
@@ -641,9 +671,12 @@
 				8CE3C2B5192DF5C70037067C /* x.png in Resources */,
 				8CE3C2A5192DA9F10037067C /* share_btn.png in Resources */,
 				8CBA67E1191B3B4B0073412E /* thumb_button.png in Resources */,
+				8C0E958919360D4900335BD7 /* conbri_x_btn.png in Resources */,
+				8C0E95831936069F00335BD7 /* mixcan_header.png in Resources */,
 				8CE3C2B1192DEC7A0037067C /* instagram_btn.png in Resources */,
 				8C07A5F7192C707B00A209AC /* library_btn.png in Resources */,
 				8CBBC76618E966C8002438CF /* Icon@2x.png in Resources */,
+				8C0E958519360A0200335BD7 /* conbra_btn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,6 +716,7 @@
 				8C68AA1C18FD515100C83C56 /* ofxToggle.cpp in Sources */,
 				8C68AA1B18FD515100C83C56 /* ofxSliderGroup.cpp in Sources */,
 				8C68AA1718FD515100C83C56 /* ofxGuiGroup.cpp in Sources */,
+				8C1754101937160100DBFA7B /* scrollViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

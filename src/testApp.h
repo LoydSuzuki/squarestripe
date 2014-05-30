@@ -93,6 +93,7 @@ class testApp : public ofxiOSApp{
     ofImage done_saving;
     ofImage x_btn;
     ofImage photolib_btn;
+    ofImage mixcan_header;
     
     ofImage contrast;
     ofImage brightness;
@@ -107,6 +108,8 @@ class testApp : public ofxiOSApp{
     ofImage home_btn;
     ofImage mixcan_logo;
     ofImage blank_photos;
+    
+    ofImage info;
     
     int shoot_num;
     

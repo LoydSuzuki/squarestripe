@@ -2,10 +2,12 @@
 #include "PostInstagram.h"
 #include "SaveUIImage.h"
 #include "webViewController.h"
+#include "scrollViewController.h"
 
 PostInstagram *instagramViewController;
 SaveUIImage *saveUIImage;
 webViewController *webView;
+scrollViewController *scrollView;
 
 //--------------------------------------------------------------
 void testApp::setup(){
@@ -38,7 +40,7 @@ void testApp::setup(){
     photo_btn[3].rotate90(1);
     photo_btn[4].rotate90(1);
     
-    back_button.loadImage("img/GLOBAL/back_button.png");
+    back_button.loadImage("img/GLOBAL/back_btn.png");
     shoot_jump_button.loadImage("img/SAVE_PAGE/camera_button.png");
     save_bar.loadImage("img/SAVE_PAGE/save_btn.png");
     instagram_bar.loadImage("img/SAVE_PAGE/instagram_btn.png");
@@ -47,8 +49,8 @@ void testApp::setup(){
     filter_off_button.loadImage("img/VIEW_CHECK_PAGE/filter_off_button.png");
     filter_on_button.loadImage("img/VIEW_CHECK_PAGE/filter_on_button.png");
     save_jump_button.loadImage("img/VIEW_CHECK_PAGE/mix_btn_orange.png");
-    edit_button.loadImage("img/SHOOT_PAGE/edit_button.png");
-    edit_button_black.loadImage("img/SHOOT_PAGE/effect_x_btn.png");
+    edit_button.loadImage("img/SHOOT_PAGE/conbra_btn.png");
+    edit_button_black.loadImage("img/SHOOT_PAGE/conbri_x_btn.png");
     done_saving.loadImage("img/SAVE_PAGE/done_saving.png");
     
     contrast.loadImage("img/SHOOT_PAGE/con.png");
@@ -65,6 +67,9 @@ void testApp::setup(){
     home_btn.loadImage("img/WEB_PAGE/home_btn.png");
     x_btn.loadImage("img/GLOBAL/x.png");
     photolib_btn.loadImage("img/VIEW_CHECK_PAGE/photo_btn.png");
+    mixcan_header.loadImage("img/GLOBAL/mixcan_header.png");
+    
+    info.loadImage("img/LOGO_PAGE/info.png");
     
     back_button.rotate90(1);
     shoot_jump_button.rotate90(1);
@@ -94,6 +99,9 @@ void testApp::setup(){
     
     x_btn.rotate90(1);
     photolib_btn.rotate90(1);
+    mixcan_header.rotate90(1);
+    
+    info.rotate90(1);
     
     pos.x = 0+photo_margin;
     before_pos.x = photo_margin + square_width;
@@ -150,6 +158,7 @@ void testApp::setup(){
     
     //Add webview setup
     webView = [[webViewController alloc] initWithNibName:@"webViewController" bundle:nil];
+    scrollView = [[scrollViewController alloc] initWithNibName:@"scrollViewController" bundle:nil];
 }
 
 //--------------------------------------------------------------
@@ -165,6 +174,9 @@ void testApp::update(){
         }
         else if(touchCheck(0,0,150,640) == TRUE){
             page = WEB_PAGE;
+        }
+        else if(touchCheck(ofGetWidth()-140,ofGetHeight()-90,70,70) == TRUE){
+            [ofxiOSGetUIWindow() addSubview:scrollView.view];
         }
         
         if(camera.imageUpdated){
@@ -510,8 +522,8 @@ void testApp::update(){
             [ofxiOSGetUIWindow() addSubview:webView.view];
 
             
-            //もどるボタン
-            if(touchCheck(0,0,80,640) == TRUE && home_flg == TRUE){
+            //もどるボタン(HOME)
+            if(touchCheck(0,0,80,640) == TRUE){
                 [webView test];
                 page = START_PAGE;
                 home_flg = FALSE;
@@ -544,6 +556,8 @@ void testApp::draw(){
         make_btn.draw(300,0,150,640);
         library_btn.draw(150,0,150,640);
         timeline_btn.draw(0,0,150,640);
+        
+        info.draw(ofGetWidth()-140,ofGetHeight()-90,70,70);
     }
     
     if(page == SHOOT_PAGE){
@@ -753,6 +767,7 @@ void testApp::draw(){
     if(page != START_PAGE && page != WEB_PAGE){
         //もどるボタン
         ofSetColor(255,255,255);
+        mixcan_header.draw(pos.y+600,0,160,640);
         back_button.draw(ofGetWidth()-140,20,80,150);
     }
 

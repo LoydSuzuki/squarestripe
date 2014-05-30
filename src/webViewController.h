@@ -13,7 +13,7 @@
     testApp *myApp;
     IBOutlet UIWebView *myWebView;
 }
-- (void)closeViewer;
+//- (void)closeViewer;
 - (void)test;
 
 //change0520
