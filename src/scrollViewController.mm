@@ -51,7 +51,7 @@
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
     
     // 画像を設定
-    imageView.image = [UIImage imageNamed:@"img/page3_1.png"];
+    imageView.image = [UIImage imageNamed:@"img/page3_5.png"];
     
     // UIScrollViewのインスタンスに画像を貼付ける
     [scrollView addSubview:imageView];

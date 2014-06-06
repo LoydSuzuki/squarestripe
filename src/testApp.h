@@ -7,6 +7,7 @@
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
 
+#define FIRST_PAGE 0
 #define LOGO_PAGE 1
 #define START_PAGE 2
 #define SHOOT_PAGE 3
@@ -89,7 +90,7 @@ class testApp : public ofxiOSApp{
     ofImage filter_on_button;
     ofImage save_jump_button;
     ofImage edit_button;
-    ofImage edit_button_black;
+    ofImage edit_button_x;
     ofImage done_saving;
     ofImage x_btn;
     ofImage photolib_btn;
@@ -162,6 +163,8 @@ class testApp : public ofxiOSApp{
     
     bool shoot_flg;
     bool move_flg;
+    
+    bool first_flg;
     
     bool photo_flg[5];
     bool photo_past_flg[5];

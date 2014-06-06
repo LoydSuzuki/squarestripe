@@ -17,6 +17,9 @@
         // Custom initialization
     }
     return self;
+    
+    //キャッシュ容量を0に
+    [[NSURLCache sharedURLCache] setMemoryCapacity:0];
 }
 
 - (void)viewDidLoad
@@ -32,8 +35,9 @@
     NSURLRequest* myRequest = [NSURLRequest requestWithURL: googleURL];
     // これを、myFirstWebViewのloadRequestメソッドに渡します
     [self->myWebView loadRequest:myRequest];
-    //キャッシュ消去
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    
+    // キャッシュを削除する。
+   // [[NSURLCache sharedURLCache] removeAllCachedResponses];
 
 }
 

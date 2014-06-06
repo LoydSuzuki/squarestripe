@@ -25,15 +25,8 @@ void testApp::setup(){
     thum_margin = 20;
     thr = 0;
     
-    camera_bar.loadImage("img/SHOOT_PAGE/camera_bar.png");
-    camera_bar.rotate90(1);
     camera_button.loadImage("img/SHOOT_PAGE/camera_btn_bar.png");
     camera_button.rotate90(1);
-    
-    photo_btn[1].loadImage("shoot01.png");
-    photo_btn[2].loadImage("shoot02.png");
-    photo_btn[3].loadImage("shoot03.png");
-    photo_btn[4].loadImage("shoot04.png");
     
     photo_btn[1].rotate90(1);
     photo_btn[2].rotate90(1);
@@ -48,9 +41,9 @@ void testApp::setup(){
     mix_bar.loadImage("img/SHOOT_PAGE/mix_btn.png");
     filter_off_button.loadImage("img/VIEW_CHECK_PAGE/filter_off_button.png");
     filter_on_button.loadImage("img/VIEW_CHECK_PAGE/filter_on_button.png");
-    save_jump_button.loadImage("img/VIEW_CHECK_PAGE/mix_btn_orange.png");
+    save_jump_button.loadImage("img/VIEW_CHECK_PAGE/share_save_btn.png");
     edit_button.loadImage("img/SHOOT_PAGE/conbra_btn.png");
-    edit_button_black.loadImage("img/SHOOT_PAGE/conbri_x_btn.png");
+    edit_button_x.loadImage("img/SHOOT_PAGE/conbri_x_btn.png");
     done_saving.loadImage("img/SAVE_PAGE/done_saving.png");
     
     contrast.loadImage("img/SHOOT_PAGE/con.png");
@@ -64,7 +57,7 @@ void testApp::setup(){
     make_btn.loadImage("img/LOGO_PAGE/make_btn.png");
     library_btn.loadImage("img/LOGO_PAGE/library_btn.png");
     timeline_btn.loadImage("img/LOGO_PAGE/timeline_btn.png");
-    home_btn.loadImage("img/WEB_PAGE/home_btn.png");
+    home_btn.loadImage("img/home_green_btn.png");
     x_btn.loadImage("img/GLOBAL/x.png");
     photolib_btn.loadImage("img/VIEW_CHECK_PAGE/photo_btn.png");
     mixcan_header.loadImage("img/GLOBAL/mixcan_header.png");
@@ -81,7 +74,7 @@ void testApp::setup(){
     filter_on_button.rotate90(1);
     save_jump_button.rotate90(1);
     edit_button.rotate90(1);
-    edit_button_black.rotate90(1);
+    edit_button_x.rotate90(1);
     done_saving.rotate90(1);
     contrast.rotate90(1);
     brightness.rotate90(1);
@@ -93,8 +86,6 @@ void testApp::setup(){
     
     blank_photos.rotate90(1);
     
-    //library_bar.rotate90(1);
-    //make_bar.rotate90(1);
     mixcan_logo.rotate90(1);
     
     x_btn.rotate90(1);
@@ -135,7 +126,7 @@ void testApp::setup(){
     img_px_edit[0].allocate(square_width,square_width,OF_IMAGE_COLOR);
     
     touch_num = 0;
-    page = START_PAGE;
+    page = FIRST_PAGE;
     stripe_image_flg = false;
     stripe_image_tx.allocate(square_width,square_width,GL_RGB);
     
@@ -159,10 +150,33 @@ void testApp::setup(){
     //Add webview setup
     webView = [[webViewController alloc] initWithNibName:@"webViewController" bundle:nil];
     scrollView = [[scrollViewController alloc] initWithNibName:@"scrollViewController" bundle:nil];
+    
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
+    
+    if(page == FIRST_PAGE){
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+        {
+            // ２回目以降の起動時
+            
+            page = START_PAGE;
+
+        }
+        else
+        {
+            // 初回起動時
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [ofxiOSGetUIWindow() addSubview:scrollView.view];
+            page = START_PAGE;
+        }
+
+    }
+    
     
     if(page == START_PAGE){
         if(touchCheck(300,0,150,640) == TRUE){
@@ -184,6 +198,7 @@ void testApp::update(){
             camera.imageUpdated = false;
             select_image.rotate90(1);
             camera.close();
+            slide_y = ofGetWidth()/2-square_width;
             page = SELECT_PAGE;
         }
     }
@@ -212,49 +227,6 @@ void testApp::update(){
 
         }
         
-        /*
-        //camera_buttonに触れる
-        if(touchCheck(camera_bar_p.y,camera_bar_p.x,80,80) == TRUE){
-            camera_button_flg = TRUE;
-        }
-        
-        if(camera_button_flg == FALSE){
-            camera_button_p.x = camera_button_p.x - float((camera_button_p.x-camera_bar_p.x+5)/5);
-            camera_button_p.y = camera_bar_p.y+5;
-            
-            for(int i=0; i<5; i++){
-                photo_flg[i] = FALSE;
-                photo_past_flg[i] = FALSE;
-                stock_image[i].clear();
-            }
-        }
-        
-        else if(camera_button_flg == TRUE){
-            if(touch_move.x < camera_bar_p.x+600-40-35){
-                camera_button_p.x = touch_move.x;
-            }
-        }
-        
-        if(camera_button_p.x > photo_switch_x[4]-50){
-            photo_flg[4] = TRUE;
-        }
-        else if(camera_button_p.x > photo_switch_x[3]-40){
-            photo_flg[3] = TRUE;
-        }
-        else if(camera_button_p.x > photo_switch_x[2]-40){
-            photo_flg[2] = TRUE;
-        }
-        else if(camera_button_p.x > photo_switch_x[1]-40){
-            photo_flg[1] = TRUE;
-        }
-        
-        for(int i=0; i<5; i++){
-            if(photo_flg[i] == TRUE && photo_past_flg[i] == FALSE){
-                stock_image[i] = videoPixels;
-                photo_past_flg[i] = TRUE;
-            }
-        }
-        */
         
         //コントラスト、明るさ調整モード
         if(touchCheck(20,470,80,150) == TRUE && mix_btn_flg == FALSE){
@@ -272,7 +244,6 @@ void testApp::update(){
             }
             
         }
-        
         
         ivGrabber.update();
         unsigned char *cdata = ivGrabber.getPixels(),
@@ -307,6 +278,7 @@ void testApp::update(){
                 page = VIEW_CHECK_PAGE;
                 mix_btn_flg = FALSE;
                 conbri_flg = FALSE;
+                slide_y = ofGetWidth()/2-square_width;
             }
         }
         
@@ -356,6 +328,10 @@ void testApp::update(){
             slide_y = touch_move.y - slide_span_y;
         }
         
+        //スライド限界
+        if(slide_y < 150-600) slide_y = 150-600;
+        if(slide_y > 1136-200) slide_y = 1136-200;
+        
         //もどるボタン
         if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
             for(int i=1; i<5; i++){
@@ -391,6 +367,7 @@ void testApp::update(){
             page = VIEW_CHECK_PAGE;
             save_flg = FALSE;
             instagram_flg = FALSE;
+            slide_y = ofGetWidth()/2-square_width;
         }
         
         //セーブボタン押した後（もどるボタンが現れる）
@@ -445,35 +422,6 @@ void testApp::update(){
             }
         }
     
-    /*else if(page == THUMBNAIL_PAGE){
-        
-     
-        for(int num=1; num<21; num++){
-            if(save_image[num].bAllocated() == TRUE){
-                if(num%2 == 1){
-                    if(touchCheck(pos.y -(thum_width+thum_margin)*(num/2-1), pos.x, thum_width, thum_width) == TRUE){
-                        select_image = save_image[num];
-                        select_number = num;
-                        page = SELECT_PAGE;
-                    }
-                }
-                else if(num%2 == 0){
-                    if(touchCheck(pos.y -(thum_width+thum_margin)*(num/2-2), pos.x+thum_width+thum_margin, thum_width, thum_width) == TRUE){
-                        select_image = save_image[num];
-                        select_number = num;
-                        page = SELECT_PAGE;
-                    }
-                }
-            }
-        }
-        
-        //もどるボタン
-        if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
-            page = START_PAGE;
-        }
-     
-    }*/
-
     //もどるボタン
         else if(page == SELECT_PAGE){
             if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
@@ -491,6 +439,10 @@ void testApp::update(){
             if(slide_flg == TRUE && moveCheck(slide_y,pos.x,600,600) == TRUE){
                 slide_y = touch_move.y - slide_span_y;
             }
+            
+            //スライド限界
+            if(slide_y < 150-600) slide_y = 150-600;
+            if(slide_y > 1136-200) slide_y = 1136-200;
 
         
             //ストライプ OFF ボタン
@@ -609,16 +561,6 @@ void testApp::draw(){
         
         if(conbri_flg == FALSE && mix_btn_flg == FALSE){
             
-            /*
-            ofSetColor(100,100,100);
-            ofEllipse(camera_button_p.y+10,ofGetHeight()/2-el_x[1]-10,20,20);
-            ofEllipse(camera_button_p.y+10,ofGetHeight()/2-el_x[2]-10,20,20);
-            ofEllipse(camera_button_p.y+10,ofGetHeight()/2-el_x[3]-10,20,20);
-            ofEllipse(camera_button_p.y+10,ofGetHeight()/2-el_x[4]-10,20,20);
-            ofSetColor(255,255,255);
-            */
-        
-            //camera_button.setAnchorPoint(camera_button.width/2,camera_button.width/2);
             camera_button.draw(-1,0,150,640);
             
             edit_button.draw(20,470,80,150);
@@ -638,7 +580,7 @@ void testApp::draw(){
             camera_button.draw(-1,0,150,640);
             
             ofSetColor(255,255,255,255);
-            edit_button_black.draw(20,470,80,150);
+            edit_button_x.draw(20,470,80,150);
             ofSetColor(116,116,116);
             ofRect(110,0,250,640);
             ofSetColor(255,255,255);
@@ -666,8 +608,6 @@ void testApp::draw(){
         //MIXボタン
         if(stock_image[1].bAllocated() == TRUE && stock_image[2].bAllocated() == TRUE
            && stock_image[3].bAllocated() == TRUE && stock_image[4].bAllocated() == TRUE){
-            //ofFill();
-            //ofSetColor(255,100,100);
             mix_bar.draw(0,0,150,640);
         }
         
@@ -696,8 +636,6 @@ void testApp::draw(){
         ofSetColor(255,255,255);
         save_jump_button.draw(0,0,80,640);
         
-        //save_image[1].draw(0,0,square_width,square_width);
-        //save_image_tx[2].draw(0,square_width,square_width,square_width);
     }
     
     else if(page == SAVE_PAGE){
@@ -743,7 +681,6 @@ void testApp::draw(){
         if(filter_flg == TRUE){
             for(int i=0; i<square_width/slice_height; i+=flames){
                 ofSetColor(0,0,0);
-                //ofRect(touch_y-(i*slice_height),0,slice_height*(flames-1),camHeight);
                 ofRect(ofGetWidth()/2-square_width+(i*slice_height*2),pos.x,slice_height*2*(flames-1),square_width*2);
             }
         }
