@@ -156,6 +156,8 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
     
+#pragma mark UPDATE FIRST_PAGE
+    
     if(page == FIRST_PAGE){
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
@@ -176,8 +178,9 @@ void testApp::update(){
         }
 
     }
+ 
     
-    
+#pragma mark UPDATE START_PAGE
     if(page == START_PAGE){
         if(touchCheck(300,0,150,640) == TRUE){
             page = SHOOT_PAGE;
@@ -202,6 +205,8 @@ void testApp::update(){
             page = SELECT_PAGE;
         }
     }
+
+#pragma mark UPDATE SHOOT_PAGE
     
     else if(page == SHOOT_PAGE){
         
@@ -291,6 +296,8 @@ void testApp::update(){
         }
     }
     
+#pragma mark UPDATE VIEW_CHECK_PAGE
+    
     else if(page == VIEW_CHECK_PAGE){
         
         //MIX加工
@@ -358,6 +365,8 @@ void testApp::update(){
         }
     }
     
+#pragma mark UPDATE SAVE_PAGE
+    
     else if(page == SAVE_PAGE){
         
         stripe_img_pos.y = stripe_img_pos.y - (stripe_img_pos.y - d_stripe_img_pos.y)/4;
@@ -422,69 +431,73 @@ void testApp::update(){
             }
         }
     
+#pragma mark UPDATE SELECT_PAGE
+    
     //もどるボタン
-        else if(page == SELECT_PAGE){
-            if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
+    else if(page == SELECT_PAGE){
+        if(touchCheck(ofGetWidth()-140,20,80,150) == TRUE){
             page = START_PAGE;
             select_image.clear();
             select_number = 0;
-            }
-            
-            //スライド操作
-            if(slide_flg == FALSE && touchCheck(slide_y,pos.x,600,600) == TRUE){
-                slide_span_y = touch_point.x-slide_y;
-                slide_flg = TRUE;
-            }
-            
-            if(slide_flg == TRUE && moveCheck(slide_y,pos.x,600,600) == TRUE){
-                slide_y = touch_move.y - slide_span_y;
-            }
-            
-            //スライド限界
-            if(slide_y < 150-600) slide_y = 150-600;
-            if(slide_y > 1136-200) slide_y = 1136-200;
-
+        }
         
-            //ストライプ OFF ボタン
-            if(touchCheck(ofGetWidth()/2+square_width-80,20,80,80) == TRUE){
-                if(filter_flg == TRUE) filter_flg = FALSE;
-            }
-            //フィルター動かすと出現
-            if(filter_flg == FALSE && move_flg == TRUE){
-                filter_flg = TRUE;
-            }
-            
-            //フォトライブラリボタン
-            if(touchCheck(0,0,80,640) == TRUE){
-                camera.openSavedPhotos();
-            }
-            
-            if(camera.imageUpdated){
-                select_image.setFromPixels(camera.pixels, camera.width, camera.height, OF_IMAGE_COLOR_ALPHA);
-                camera.imageUpdated = false;
-                select_image.rotate90(1);
-                camera.close();
-            }
-
+        //スライド操作
+        if(slide_flg == FALSE && touchCheck(slide_y,pos.x,600,600) == TRUE){
+            slide_span_y = touch_point.x-slide_y;
+            slide_flg = TRUE;
         }
+        
+        if(slide_flg == TRUE && moveCheck(slide_y,pos.x,600,600) == TRUE){
+            slide_y = touch_move.y - slide_span_y;
+        }
+        
+        //スライド限界
+        if(slide_y < 150-600) slide_y = 150-600;
+        if(slide_y > 1136-200) slide_y = 1136-200;
+        
+        
+        //ストライプ OFF ボタン
+        if(touchCheck(ofGetWidth()/2+square_width-80,20,80,80) == TRUE){
+            if(filter_flg == TRUE) filter_flg = FALSE;
+        }
+        //フィルター動かすと出現
+        if(filter_flg == FALSE && move_flg == TRUE){
+            filter_flg = TRUE;
+        }
+        
+        //フォトライブラリボタン
+        if(touchCheck(0,0,80,640) == TRUE){
+            camera.openSavedPhotos();
+        }
+        
+        if(camera.imageUpdated){
+            select_image.setFromPixels(camera.pixels, camera.width, camera.height, OF_IMAGE_COLOR_ALPHA);
+            camera.imageUpdated = false;
+            select_image.rotate90(1);
+            camera.close();
+        }
+        
+    }
     
-        else if(page == WEB_PAGE){
-            //Add webView Setup
-            
-            [ofxiOSGetUIWindow() addSubview:webView.view];
-
-            
-            //もどるボタン(HOME)
-            if(touchCheck(0,0,80,640) == TRUE){
-                [webView test];
-                page = START_PAGE;
-                home_flg = FALSE;
-            }
-            else if(touchCheck(0,0,150,640) == TRUE){
-                home_flg = TRUE;
-            }
-
+#pragma mark UPDATE WEB_PAGE
+    
+    else if(page == WEB_PAGE){
+        //Add webView Setup
+        
+        [ofxiOSGetUIWindow() addSubview:webView.view];
+        
+        
+        //もどるボタン(HOME)
+        if(touchCheck(0,0,80,640) == TRUE){
+            [webView test];
+            page = START_PAGE;
+            home_flg = FALSE;
         }
+        else if(touchCheck(0,0,150,640) == TRUE){
+            home_flg = TRUE;
+        }
+        
+    }
     
     //タッチ関数をリセットする
     touch_point.x = -100;
@@ -499,6 +512,8 @@ void testApp::draw(){
     ofBackground(255,255,255);
     ofSetColor(255,255,255);
     
+#pragma mark - DRAW START_PAGE
+
     if(page == START_PAGE){
         
         mixcan_logo.draw(camera_bar_p.y+600,camera_bar_p.x,81,600);
@@ -511,6 +526,8 @@ void testApp::draw(){
         
         info.draw(ofGetWidth()-140,ofGetHeight()-90,70,70);
     }
+
+#pragma mark DRAW SHOOT_PAGE
     
     if(page == SHOOT_PAGE){
         
@@ -612,6 +629,9 @@ void testApp::draw(){
         }
         
     }
+    
+#pragma mark DRAW VIEW_CHECK_PAGE
+    
     else if(page == VIEW_CHECK_PAGE){
         stripe_image_tx.draw(slide_y,pos.x,square_width*2,square_width*2);
         
