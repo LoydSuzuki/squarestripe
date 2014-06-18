@@ -18,6 +18,9 @@
 #define VIEW_PAGE 8
 #define WEB_PAGE 9
 
+#define iPhone5 1
+#define others 2
+
 class testApp : public ofxiOSApp{
 	
     public:
@@ -49,7 +52,7 @@ class testApp : public ofxiOSApp{
         }*/
     
         
-    ofVideoGrabber ivGrabber;
+    //ofVideoGrabber ivGrabber;
     ofxiOSImagePicker camera;
     ofImage image_for_save;
     unsigned char *    videoChar;
@@ -111,6 +114,7 @@ class testApp : public ofxiOSApp{
     ofImage blank_photos;
     
     ofImage info;
+    ofImage testing;
     
     int shoot_num;
     
@@ -173,6 +177,8 @@ class testApp : public ofxiOSApp{
     
     int el_dx[5];
     int el_x[5];
+    
+    int device_number;
     
 };
 

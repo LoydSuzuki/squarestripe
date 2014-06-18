@@ -47,8 +47,8 @@ int main(){
 		iphone5 = true;
 		width = 640;
 		height = 1136;
-		
-	}else{iphone5=false;
+	}
+    else{iphone5=false;
 		
 	}
 	

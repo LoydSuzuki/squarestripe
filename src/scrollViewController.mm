@@ -23,9 +23,17 @@
 {
     pageNumber = 0;
     
+    CGRect screenSize = [UIScreen mainScreen].bounds;
+    if(screenSize.size.height == 568){
+        nibNameOrNil = @"scrollViewController_4_0";
+    }
+    else{
+        nibNameOrNil = @"scrollViewController_3_5";
+    }
+    
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
     
@@ -35,29 +43,48 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    scrollView.delegate = self;
-    
+    scrollView.userInteractionEnabled = YES;
     scrollView.pagingEnabled = YES;
     scrollView.contentSize = CGSizeMake(1600, 0);
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.scrollsToTop = NO;
     
+    scrollView.delegate = self;
+    
     pageControl.numberOfPages = 5;
     pageControl.currentPage = 0;
     pageNumber = 0;
+
     
-    CGRect rect = CGRectMake(0,0,1600,568);
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
-    
-    // 画像を設定
-    imageView.image = [UIImage imageNamed:@"img/page3_5.png"];
-    
-    // UIScrollViewのインスタンスに画像を貼付ける
-    [scrollView addSubview:imageView];
-    
-    // UIScrollViewのコンテンツサイズを画像のサイズに合わせる
-    scrollView.contentSize = imageView.bounds.size;
+    CGRect screenSize = [UIScreen mainScreen].bounds;
+    //iPhone5の場合
+    if(screenSize.size.height == 568){
+
+        CGRect rect = CGRectMake(0,0,1600,568);
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
+        imageView.image = [UIImage imageNamed:@"img/page3_5.png"];
+        
+        // UIScrollViewのインスタンスに画像を貼付ける
+        [scrollView addSubview:imageView];
+        
+        // UIScrollViewのコンテンツサイズを画像のサイズに合わせる
+        scrollView.contentSize = imageView.bounds.size;
+        
+    }
+    //その他
+    else{
+        
+        CGRect rect = CGRectMake(0,0,1600,480);
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
+        imageView.image =[UIImage imageNamed:@"img/tutorial_other.png"];
+        
+        // UIScrollViewのインスタンスに画像を貼付ける
+        [scrollView addSubview:imageView];
+        
+        // UIScrollViewのコンテンツサイズを画像のサイズに合わせる
+        scrollView.contentSize = imageView.bounds.size;
+    }
     
 }
 

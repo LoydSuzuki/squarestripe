@@ -18,12 +18,11 @@
 		678E130E17951540005B6D19 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130D17951540005B6D19 /* Default@2x.png */; };
 		678E131017951549005B6D19 /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130F17951549005B6D19 /* Default-568h@2x~iphone.png */; };
 		8C07A5EC1929AF2100A209AC /* webViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C07A5EA1929AF2100A209AC /* webViewController.mm */; };
-		8C07A5ED1929AF2100A209AC /* webViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C07A5EB1929AF2100A209AC /* webViewController.xib */; };
+		8C07A5ED1929AF2100A209AC /* webViewController_4_0.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C07A5EB1929AF2100A209AC /* webViewController_4_0.xib */; };
 		8C0E958919360D4900335BD7 /* conbri_x_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C0E958819360D4900335BD7 /* conbri_x_btn.png */; };
 		8C1754101937160100DBFA7B /* scrollViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C17540E1937160100DBFA7B /* scrollViewController.mm */; };
-		8C1754111937160100DBFA7B /* scrollViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C17540F1937160100DBFA7B /* scrollViewController.xib */; };
+		8C1754111937160100DBFA7B /* scrollViewController_4_0.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C17540F1937160100DBFA7B /* scrollViewController_4_0.xib */; };
 		8C1754151937489E00DBFA7B /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C1754141937489E00DBFA7B /* info.png */; };
-		8C17541F19383E4300DBFA7B /* page3_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C17541E19383E4300DBFA7B /* page3_4.png */; };
 		8C1754391938521200DBFA7B /* conbra_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C1754381938521200DBFA7B /* conbra_btn.png */; };
 		8C17543D1938540800DBFA7B /* mix_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C17543C1938540800DBFA7B /* mix_btn.png */; };
 		8C17543F1938546D00DBFA7B /* share_save_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C17543E1938546D00DBFA7B /* share_save_btn.png */; };
@@ -40,7 +39,11 @@
 		8C17545B19385A2F00DBFA7B /* home_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C17545A19385A2F00DBFA7B /* home_btn.png */; };
 		8C17545D19385A7500DBFA7B /* home_green_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C17545C19385A7500DBFA7B /* home_green_btn.png */; };
 		8C17545F1938654700DBFA7B /* page3_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C17545E1938654700DBFA7B /* page3_5.png */; };
+		8C2E3D3B194EAED500E2098D /* testing.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8C2E3D3A194EAED500E2098D /* testing.jpg */; };
+		8C2E3D3D194EFF0D00E2098D /* webViewController_other.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C2E3D3C194EFF0D00E2098D /* webViewController_other.xib */; };
 		8C561909190FF2810021C9EC /* SaveUIImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C561908190FF2810021C9EC /* SaveUIImage.mm */; };
+		8C64F9C01950044300FB71A7 /* scrollViewController_3_5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C64F9BF1950044300FB71A7 /* scrollViewController_3_5.xib */; };
+		8C65F3981950226400D36DD3 /* tutorial_other.png in Resources */ = {isa = PBXBuildFile; fileRef = 8C65F3971950226400D36DD3 /* tutorial_other.png */; };
 		8CB5B112190A08D600CE3E5D /* PostInstagram.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8CB5B111190A08D600CE3E5D /* PostInstagram.mm */; };
 		8CBA67C4191B1F480073412E /* bri.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CBA67C2191B1F480073412E /* bri.png */; };
 		8CBA67C5191B1F480073412E /* con.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CBA67C3191B1F480073412E /* con.png */; };
@@ -104,13 +107,12 @@
 		678E130F17951549005B6D19 /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x~iphone.png"; path = "bin/data/Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		8C07A5E91929AF2100A209AC /* webViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webViewController.h; sourceTree = "<group>"; };
 		8C07A5EA1929AF2100A209AC /* webViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = webViewController.mm; sourceTree = "<group>"; };
-		8C07A5EB1929AF2100A209AC /* webViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = webViewController.xib; sourceTree = "<group>"; };
+		8C07A5EB1929AF2100A209AC /* webViewController_4_0.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = webViewController_4_0.xib; sourceTree = "<group>"; };
 		8C0E958819360D4900335BD7 /* conbri_x_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = conbri_x_btn.png; sourceTree = "<group>"; };
 		8C17540D1937160100DBFA7B /* scrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollViewController.h; sourceTree = "<group>"; };
 		8C17540E1937160100DBFA7B /* scrollViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = scrollViewController.mm; sourceTree = "<group>"; };
-		8C17540F1937160100DBFA7B /* scrollViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = scrollViewController.xib; sourceTree = "<group>"; };
+		8C17540F1937160100DBFA7B /* scrollViewController_4_0.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = scrollViewController_4_0.xib; sourceTree = "<group>"; };
 		8C1754141937489E00DBFA7B /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
-		8C17541E19383E4300DBFA7B /* page3_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page3_4.png; sourceTree = "<group>"; };
 		8C1754381938521200DBFA7B /* conbra_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = conbra_btn.png; sourceTree = "<group>"; };
 		8C17543C1938540800DBFA7B /* mix_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mix_btn.png; sourceTree = "<group>"; };
 		8C17543E1938546D00DBFA7B /* share_save_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_save_btn.png; sourceTree = "<group>"; };
@@ -127,8 +129,12 @@
 		8C17545A19385A2F00DBFA7B /* home_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_btn.png; sourceTree = "<group>"; };
 		8C17545C19385A7500DBFA7B /* home_green_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_green_btn.png; sourceTree = "<group>"; };
 		8C17545E1938654700DBFA7B /* page3_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page3_5.png; sourceTree = "<group>"; };
+		8C2E3D3A194EAED500E2098D /* testing.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testing.jpg; sourceTree = "<group>"; };
+		8C2E3D3C194EFF0D00E2098D /* webViewController_other.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = webViewController_other.xib; sourceTree = "<group>"; };
 		8C561907190FF2810021C9EC /* SaveUIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveUIImage.h; sourceTree = "<group>"; };
 		8C561908190FF2810021C9EC /* SaveUIImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SaveUIImage.mm; sourceTree = "<group>"; };
+		8C64F9BF1950044300FB71A7 /* scrollViewController_3_5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = scrollViewController_3_5.xib; sourceTree = "<group>"; };
+		8C65F3971950226400D36DD3 /* tutorial_other.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorial_other.png; sourceTree = "<group>"; };
 		8CB5B0E01900E98100CE3E5D /* Globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 		8CB5B110190A08D600CE3E5D /* PostInstagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostInstagram.h; sourceTree = "<group>"; };
 		8CB5B111190A08D600CE3E5D /* PostInstagram.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PostInstagram.mm; sourceTree = "<group>"; };
@@ -241,10 +247,12 @@
 			children = (
 				8C07A5E91929AF2100A209AC /* webViewController.h */,
 				8C07A5EA1929AF2100A209AC /* webViewController.mm */,
-				8C07A5EB1929AF2100A209AC /* webViewController.xib */,
+				8C07A5EB1929AF2100A209AC /* webViewController_4_0.xib */,
+				8C2E3D3C194EFF0D00E2098D /* webViewController_other.xib */,
 				8C17540D1937160100DBFA7B /* scrollViewController.h */,
 				8C17540E1937160100DBFA7B /* scrollViewController.mm */,
-				8C17540F1937160100DBFA7B /* scrollViewController.xib */,
+				8C17540F1937160100DBFA7B /* scrollViewController_4_0.xib */,
+				8C64F9BF1950044300FB71A7 /* scrollViewController_3_5.xib */,
 			);
 			name = gui;
 			sourceTree = "<group>";
@@ -334,7 +342,8 @@
 		8CBBC75718E966C8002438CF /* img */ = {
 			isa = PBXGroup;
 			children = (
-				8C17541E19383E4300DBFA7B /* page3_4.png */,
+				8C65F3971950226400D36DD3 /* tutorial_other.png */,
+				8C2E3D3A194EAED500E2098D /* testing.jpg */,
 				8C17545E1938654700DBFA7B /* page3_5.png */,
 				8C07A5FA192C825800A209AC /* WEB_PAGE */,
 				8CB5B1031907952700CE3E5D /* LOGO_PAGE */,
@@ -484,25 +493,27 @@
 				8CBA67CB191B2D8A0073412E /* Images.xcassets in Resources */,
 				8C17544B1938575000DBFA7B /* mixcan_header.png in Resources */,
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
+				8C64F9C01950044300FB71A7 /* scrollViewController_3_5.xib in Resources */,
 				8CBA67C5191B1F480073412E /* con.png in Resources */,
 				E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */,
 				8C17544F1938580C00DBFA7B /* photo_btn.png in Resources */,
 				678E130817951530005B6D19 /* Icon@2x.png in Resources */,
 				678E130A17951536005B6D19 /* Icon.png in Resources */,
 				8C1754531938585E00DBFA7B /* save_btn.png in Resources */,
-				8C1754111937160100DBFA7B /* scrollViewController.xib in Resources */,
+				8C1754111937160100DBFA7B /* scrollViewController_4_0.xib in Resources */,
 				8C17545F1938654700DBFA7B /* page3_5.png in Resources */,
+				8C2E3D3B194EAED500E2098D /* testing.jpg in Resources */,
 				8C1754151937489E00DBFA7B /* info.png in Resources */,
 				8CE3C2A9192DDCF00037067C /* blank_photo_white.png in Resources */,
 				678E130C1795153C005B6D19 /* Default.png in Resources */,
 				8C1754521938585E00DBFA7B /* instagram_btn.png in Resources */,
 				8CBA67D3191B34BD0073412E /* mixcan_top_640_1136.png in Resources */,
-				8C07A5ED1929AF2100A209AC /* webViewController.xib in Resources */,
+				8C07A5ED1929AF2100A209AC /* webViewController_4_0.xib in Resources */,
 				678E130E17951540005B6D19 /* Default@2x.png in Resources */,
 				8CE3C2AB192DDE670037067C /* camera_btn_orange.png in Resources */,
 				678E131017951549005B6D19 /* Default-568h@2x~iphone.png in Resources */,
-				8C17541F19383E4300DBFA7B /* page3_4.png in Resources */,
 				8CBBC75B18E966C8002438CF /* .gitkeep in Resources */,
+				8C65F3981950226400D36DD3 /* tutorial_other.png in Resources */,
 				8C1754391938521200DBFA7B /* conbra_btn.png in Resources */,
 				8CBA67D1191B33FF0073412E /* mixcan_icon_120_120.png in Resources */,
 				8C17543D1938540800DBFA7B /* mix_btn.png in Resources */,
@@ -518,6 +529,7 @@
 				8CE3C2A5192DA9F10037067C /* share_btn.png in Resources */,
 				8C175445193856DA00DBFA7B /* library_btn.png in Resources */,
 				8C0E958919360D4900335BD7 /* conbri_x_btn.png in Resources */,
+				8C2E3D3D194EFF0D00E2098D /* webViewController_other.xib in Resources */,
 				8C175447193856DA00DBFA7B /* timeline_btn.png in Resources */,
 				8CBBC76618E966C8002438CF /* Icon@2x.png in Resources */,
 				8C17545D19385A7500DBFA7B /* home_green_btn.png in Resources */,

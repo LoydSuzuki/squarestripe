@@ -64,6 +64,8 @@ void testApp::setup(){
     
     info.loadImage("img/LOGO_PAGE/info.png");
     
+    testing.loadImage("img/testing.jpg");
+    
     back_button.rotate90(1);
     shoot_jump_button.rotate90(1);
     save_bar.rotate90(1);
@@ -93,6 +95,7 @@ void testApp::setup(){
     mixcan_header.rotate90(1);
     
     info.rotate90(1);
+    testing.rotate90(1);
     
     pos.x = 0+photo_margin;
     before_pos.x = photo_margin + square_width;
@@ -108,7 +111,7 @@ void testApp::setup(){
     
     //square_width = ofGetWidth();
     flames = 4;
-    ivGrabber.initGrabber(camWidth,camHeight,OF_PIXELS_BGRA);
+    //ivGrabber.initGrabber(camWidth,camHeight,OF_PIXELS_BGRA);
     videoImage.allocate(camWidth,camHeight,OF_IMAGE_COLOR);
     videoImagePre.allocate(camWidth,camHeight,OF_IMAGE_COLOR);
     videoPixels.allocate(camWidth,camHeight,OF_IMAGE_COLOR);
@@ -148,8 +151,16 @@ void testApp::setup(){
     shoot_flg = FALSE;
     
     //Add webview setup
-    webView = [[webViewController alloc] initWithNibName:@"webViewController" bundle:nil];
-    scrollView = [[scrollViewController alloc] initWithNibName:@"scrollViewController" bundle:nil];
+    webView = [[webViewController alloc] initWithNibName:nil bundle:nil];
+    scrollView = [[scrollViewController alloc] initWithNibName:nil bundle:nil];
+    
+    if(ofGetHeight() == 640 && ofGetWidth() == 1136){
+        device_number = iPhone5;
+    }
+    else{
+        device_number = others;
+    }
+    
     
 }
 
@@ -247,11 +258,11 @@ void testApp::update(){
             else if(moveCheck(120,100,115,500) == TRUE){
                 bri = (touch_move.x-100)*255/500;
             }
-            
         }
         
-        ivGrabber.update();
-        unsigned char *cdata = ivGrabber.getPixels(),
+        //ivGrabber.update();
+        //unsigned char *cdata = ivGrabber.getPixels(),
+        unsigned char *cdata = testing.getPixels(),
         *idata_p = videoImagePre.getPixels(),
         *idata = videoImage.getPixels();
         
@@ -538,7 +549,7 @@ void testApp::draw(){
             shoot_flg = FALSE;
         }
         
-        
+        /*
         if(stock_image[1].bAllocated() == FALSE){
             el_dx[1] = 100;
             el_dx[2] = 150;
@@ -570,7 +581,7 @@ void testApp::draw(){
             el_dx[3] = 0;
             el_dx[4] = 0;
             
-        }
+        }*/
         
         for(int i=1; i<5; i++){
             el_x[i] = el_x[i] - (el_x[i]-el_dx[i])/2;
@@ -615,9 +626,17 @@ void testApp::draw(){
             
         }
         
-        videoTexture.draw(cam_pos.y,pos.x,square_width*2,square_width*2);
+        if(device_number == iPhone5){
+            videoTexture.draw(cam_pos.y,pos.x,square_width*2,square_width*2);
+        }
+        else {
+            videoTexture.draw(cam_pos.y,pos.x+square_width*0.25,square_width*1.5,square_width*1.5);
+        }
         
-        if(conbri_flg == FALSE) cam_pos.y = cam_pos.y - (cam_pos.y - (pos.y-ofGetHeight()/4-20))/1.6;
+        if(conbri_flg == FALSE){
+            if(device_number == iPhone5) cam_pos.y = cam_pos.y - (cam_pos.y - (pos.y-ofGetHeight()/4-20))/1.6;
+            else cam_pos.y = cam_pos.y - (cam_pos.y - (pos.y-ofGetHeight()/4-20+150))/1.6;
+        }
         else if(conbri_flg == TRUE) cam_pos.y = cam_pos.y - (cam_pos.y - 380)/1.6;
         
         
@@ -676,7 +695,8 @@ void testApp::draw(){
         }
         
         if(save_flg == TRUE){
-            done_saving.draw(200,(640-245)/2,50,245);
+            if(device_number == iPhone5) done_saving.draw(200,(640-245)/2,50,245);
+            else done_saving.draw(130,(640-245)/2,50,245);
         }
         
     }
@@ -715,6 +735,8 @@ void testApp::draw(){
         photolib_btn.draw(-1,0,80,640);
 
     }
+    
+#pragma mark DRAW WEB_PAGE
     
     if(page == WEB_PAGE){
        home_btn.draw(0,0,80,640);

@@ -12,14 +12,23 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
+    CGRect screenSize = [UIScreen mainScreen].bounds;
+    if(screenSize.size.height == 568){
+        nibNameOrNil = @"webViewController_4_0";
+    }
+    else{
+        nibNameOrNil = @"webViewController_other";
+    }
+    
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
     
     //キャッシュ容量を0に
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+    
 }
 
 - (void)viewDidLoad
@@ -28,13 +37,14 @@
     // Do any additional setup after loading the view from its nib.
     myApp = (testApp*)ofGetAppPtr();
     // Stringオブジェクトをつくります
-    NSString* urlString = @"http://scanimatecam.lomo.jp/";
+    NSString* urlString = @"http://google.com/";
     // これを使って、URLオブジェクトをつくります
     NSURL* googleURL = [NSURL URLWithString: urlString];
     // さらにこれを使って、Requestオブジェクトをつくります
     NSURLRequest* myRequest = [NSURLRequest requestWithURL: googleURL];
     // これを、myFirstWebViewのloadRequestメソッドに渡します
     [self->myWebView loadRequest:myRequest];
+    
     
     // キャッシュを削除する。
    // [[NSURLCache sharedURLCache] removeAllCachedResponses];
