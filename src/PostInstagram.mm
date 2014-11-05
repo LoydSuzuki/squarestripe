@@ -30,7 +30,7 @@
     self.interactionController = [UIDocumentInteractionController interactionControllerWithURL:fileURL];
     self.interactionController.UTI = @"com.instagram.exclusivegram";
     self.interactionController.delegate = self;
-    self.interactionController.annotation = [NSDictionary dictionaryWithObject:@"UPLOAD FROM #mixcan_TL http://scanimatecam.lomo.jp/" forKey:@"InstagramCaption"];
+    self.interactionController.annotation = [NSDictionary dictionaryWithObject:@"UPLOAD FROM #mixcan_TL http://mixcan.net/" forKey:@"InstagramCaption"];
     
     BOOL present = [self.interactionController presentOpenInMenuFromRect:self.view.frame
                                                                   inView:self.view

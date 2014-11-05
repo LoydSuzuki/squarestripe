@@ -48,6 +48,12 @@ int main(){
 		width = 640;
 		height = 1136;
 	}
+    /*else if ([ [ UIScreen mainScreen ] bounds ].size.height == 667){
+        iphone5 = true;
+        width = 750;
+        height = 1334;
+    }*/
+    
     else{iphone5=false;
 		
 	}

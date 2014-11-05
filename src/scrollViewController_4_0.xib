@@ -28,10 +28,10 @@
                         <action selector="changePage:" destination="-1" eventType="touchDown" id="dn0-dI-Fpf"/>
                     </connections>
                 </pageControl>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FFy-eN-5Jn">
-                    <rect key="frame" x="260" y="20" width="40" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="FFy-eN-5Jn">
+                    <rect key="frame" x="277" y="30" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Close">
+                    <state key="normal" backgroundImage="conbri_x_btn.png">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -45,4 +45,7 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <resources>
+        <image name="conbri_x_btn.png" width="153" height="83"/>
+    </resources>
 </document>

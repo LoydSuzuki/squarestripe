@@ -34,7 +34,15 @@ class testApp : public ofxiOSApp{
         void touchUp(ofTouchEventArgs & touch);
         void touchDoubleTap(ofTouchEventArgs & touch);
         void touchCancelled(ofTouchEventArgs & touch);
-        bool touchCheck(int x,int y,int w,int h);
+        bool touchDownCheck(int x,int y,int w,int h);
+        void touchDownColor(int x,int y,int w,int h);
+        void drawCheck(int x,int y,int w,int h,ofImage img);
+        void drawCheck(int x,int y,int w,int h,ofImage img,ofImage img_hover);
+        void drawCheck(int x,int y,int w,int h,ofImage img,int alpha);
+        void swipe_arrow_init();
+        void shoot_req_init();
+        void edit_req_init();
+        bool touchUpCheck(int x,int y,int w,int h);
         bool  moveCheck(int x,int y,int w,int h);
         UIImage * UIImageFromOFImage(ofImage & img);
         void saveUIImageToRoll(UIImage & img);
@@ -42,7 +50,7 @@ class testApp : public ofxiOSApp{
         void lostFocus();
         void gotFocus();
         void gotMemoryWarning();
-        void deviceOrientationChanged(int newOrientation);
+    void deviceOrientationChanged(int newOrientation);
     
         /*void ofxiOSScreenGrab(id delegate) {
             CGRect rect = [[UIScreen mainScreen] bounds];
@@ -51,8 +59,7 @@ class testApp : public ofxiOSApp{
             NSInteger myDataLength = width * height * 4;
         }*/
     
-        
-    //ofVideoGrabber ivGrabber;
+    ofVideoGrabber ivGrabber;
     ofxiOSImagePicker camera;
     ofImage image_for_save;
     unsigned char *    videoChar;
@@ -67,8 +74,10 @@ class testApp : public ofxiOSApp{
     ofPoint pos;
     ofPoint after_pos;
     ofPoint before_pos;
-    ofPoint touch_point;
+    ofPoint touch_up_point;
+    ofPoint touch_down_point;
     ofPoint touch_move;
+    ofPoint past_touch_move;
     ofPoint stripe_img_pos;
     ofPoint d_stripe_img_pos;
     
@@ -79,9 +88,12 @@ class testApp : public ofxiOSApp{
     int thum_width;
     
     ofImage camera_button;
+    ofImage camera_button_push;
     ofPoint camera_button_p;
     ofImage camera_bar;
     ofPoint camera_bar_p;
+    
+    ofImage menus;
     
     ofImage back_button;
     ofImage shoot_jump_button;
@@ -95,9 +107,13 @@ class testApp : public ofxiOSApp{
     ofImage edit_button;
     ofImage edit_button_x;
     ofImage done_saving;
+    ofImage please;
     ofImage x_btn;
     ofImage photolib_btn;
     ofImage mixcan_header;
+    ofImage save_menus;
+    
+    ofImage cancel_photo_btn;
     
     ofImage contrast;
     ofImage brightness;
@@ -122,6 +138,22 @@ class testApp : public ofxiOSApp{
     ofImage stripe_image;
     ofImage photo_btn[5];
     
+    struct indicator{
+        ofImage img;
+        int width;
+        int height;
+        ofPoint pos;
+        ofPoint pos_set;
+        ofPoint d_pos;
+        bool flg;
+        int alph;
+    };
+    
+    indicator swipe_arrow;
+    indicator shoot_req;
+    indicator edit_req;
+    void indicator_init(indicator indi);
+    
     UIImage *image;
     UIWebView * myWebView;
     
@@ -141,6 +173,10 @@ class testApp : public ofxiOSApp{
     float square_width;
     int flames;
     
+    float speed;
+    float friction;
+    bool accel_flg;
+    
     bool flg;
     
     ofPoint touchLoc[6];
@@ -157,8 +193,10 @@ class testApp : public ofxiOSApp{
     bool shoot_btn_flg[5];
     bool save_flg;
     bool instagram_flg;
+    bool none_instagram_flg;
     bool camera_button_flg;
     bool slide_flg;
+    bool slide_move_flg;
     
     bool save_page_flg;
     
@@ -169,8 +207,9 @@ class testApp : public ofxiOSApp{
     bool move_flg;
     
     bool first_flg;
+    bool flash_flg[5];
     
-    bool photo_flg[5];
+    int flash[5];
     bool photo_past_flg[5];
     
     int photo_switch_x[5];

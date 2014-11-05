@@ -37,7 +37,7 @@
     // Do any additional setup after loading the view from its nib.
     myApp = (testApp*)ofGetAppPtr();
     // Stringオブジェクトをつくります
-    NSString* urlString = @"http://google.com/";
+    NSString* urlString = @"http://samples.amana.jp/app/mixcan/timeline";
     // これを使って、URLオブジェクトをつくります
     NSURL* googleURL = [NSURL URLWithString: urlString];
     // さらにこれを使って、Requestオブジェクトをつくります

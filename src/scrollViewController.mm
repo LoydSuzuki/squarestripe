@@ -63,7 +63,7 @@
 
         CGRect rect = CGRectMake(0,0,1600,568);
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
-        imageView.image = [UIImage imageNamed:@"img/page3_5.png"];
+        imageView.image = [UIImage imageNamed:@"img/tutorial_3200_1136.png"];
         
         // UIScrollViewのインスタンスに画像を貼付ける
         [scrollView addSubview:imageView];
@@ -77,7 +77,7 @@
         
         CGRect rect = CGRectMake(0,0,1600,480);
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
-        imageView.image =[UIImage imageNamed:@"img/tutorial_other.png"];
+        imageView.image =[UIImage imageNamed:@"img/tutorial_3200_960.png"];
         
         // UIScrollViewのインスタンスに画像を貼付ける
         [scrollView addSubview:imageView];
